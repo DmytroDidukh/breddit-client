@@ -6,19 +6,49 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-ts": "tsc --noEmit",
+    "lint:ts": "eslint 'src/**/*.{ts,tsx}' --fix",
+    "prettier:write:ts": "prettier --write 'src/**/*.{ts,tsx}'",
+    "lint-staged": "lint-staged"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run check-ts && npm run lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "npm run prettier:write:ts",
+      "npm run lint:ts"
+    ]
   },
   "dependencies": {
-    "react": "^18",
-    "react-dom": "^18",
-    "next": "14.0.3"
+    "@chakra-ui/next-js": "~2.2.0",
+    "@chakra-ui/react": "~2.8.2",
+    "@emotion/react": "~11.11.1",
+    "@emotion/styled": "~11.11.0",
+    "framer-motion": "~10.16.5",
+    "next": "14.0.3",
+    "react": "~18",
+    "react-dom": "~18"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
-    "eslint-config-next": "14.0.3"
+    "@typescript-eslint/eslint-plugin": "~6.8.0",
+    "@typescript-eslint/parser": "~6.8.0",
+    "@types/node": "~20.9.2",
+    "@types/react": "~18",
+    "@types/react-dom": "~18",
+    "eslint": "~8.51.0",
+    "eslint-config-prettier": "~9.0.0",
+    "eslint-config-next": "14.0.3",
+    "eslint-plugin-import": "~2.28.1",
+    "eslint-plugin-prettier": "~5.0.1",
+    "husky": "~8.0.3",
+    "lint": "~0.8.19",
+    "lint-staged": "~15.0.2",
+    "staged": "~0.0.0",
+    "prettier": "~3.0.3",
+    "typescript": "~5.2.2"
   }
 }
