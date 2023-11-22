@@ -1,6 +1,7 @@
+import { ColorModeScript } from '@chakra-ui/react';
 import React from 'react';
 
-import { Theme } from '@/app/theme';
+import { theme, Theme } from '@/app/theme';
 
 import type { Metadata } from 'next';
 // import './globals.css';
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <Theme>{children}</Theme>
       </body>
     </html>

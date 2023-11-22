@@ -1,6 +1,6 @@
 'use client';
 
-import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme, type ThemeConfig } from '@chakra-ui/react';
 import React from 'react';
 // Supports weights 100-900
 import '@fontsource-variable/raleway';
@@ -18,7 +18,12 @@ const fonts = {
   body: `'Raleway', sans-serif`,
 };
 
-export const theme = extendTheme({ colors, fonts });
+const config: ThemeConfig = {
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+};
+
+export const theme = extendTheme({ colors, fonts, config });
 
 export function Theme({ children }: { children: React.ReactNode }) {
   return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
