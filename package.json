@@ -24,6 +24,7 @@
     ]
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/next-js": "~2.2.0",
     "@chakra-ui/react": "~2.8.2",
     "@emotion/react": "~11.11.1",
@@ -50,6 +51,7 @@
     "lint": "~0.8.19",
     "lint-staged": "~15.0.2",
     "prettier": "~3.0.3",
+    "sass": "~1.69.5",
     "staged": "~0.0.0",
     "typescript": "~5.2.2"
   }

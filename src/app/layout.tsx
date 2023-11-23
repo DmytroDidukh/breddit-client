@@ -1,9 +1,9 @@
 import React from 'react';
 
+import Header from '@/app/header';
 import { Theme } from '@/app/theme';
 
 import type { Metadata } from 'next';
-// import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Breddit',
@@ -14,7 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Theme>{children}</Theme>
+        <Theme>
+          <Header />
+          {children}
+        </Theme>
       </body>
     </html>
   );

@@ -1,7 +1,9 @@
 'use client';
 
+import { CacheProvider } from '@chakra-ui/next-js';
 import {
   ChakraProvider,
+  ColorModeScript,
   extendTheme,
   StyleFunctionProps,
   type ThemeConfig,
@@ -34,11 +36,11 @@ export const theme = extendTheme({ styles, fonts, config });
 
 export function Theme({ children }: { children: React.ReactNode }) {
   return (
-    <React.Fragment>
+    <CacheProvider>
       {/* TODO: Add color mode toggle and fix script error */}
       {/* https://chakra-ui.com/docs/styled-system/color-mode */}
-      {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} type={'cookie'} /> */}
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} type={'cookie'} />
       <ChakraProvider theme={theme}>{children}</ChakraProvider>
-    </React.Fragment>
+    </CacheProvider>
   );
 }
