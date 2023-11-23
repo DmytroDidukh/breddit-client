@@ -1,16 +1,23 @@
 'use client';
 
-import { ChakraProvider, ColorModeScript, extendTheme, type ThemeConfig } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  extendTheme,
+  StyleFunctionProps,
+  type ThemeConfig,
+} from '@chakra-ui/react';
+import { mode } from '@chakra-ui/theme-tools';
 import React from 'react';
 // Supports weights 100-900
 import '@fontsource-variable/raleway';
 
-const colors = {
-  brand: {
-    900: '#1a365d',
-    800: '#153e75',
-    700: '#2a69ac',
-  },
+const styles = {
+  global: (props: StyleFunctionProps) => ({
+    body: {
+      color: mode('gray.800', 'whiteAlpha.900')(props),
+      bg: mode('white', 'grey.800')(props),
+    },
+  }),
 };
 
 const fonts = {
@@ -19,17 +26,19 @@ const fonts = {
 };
 
 const config: ThemeConfig = {
-  initialColorMode: 'light',
+  initialColorMode: 'dark',
   useSystemColorMode: false,
 };
 
-export const theme = extendTheme({ colors, fonts, config });
+export const theme = extendTheme({ styles, fonts, config });
 
 export function Theme({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+    <React.Fragment>
+      {/* TODO: Add color mode toggle and fix script error */}
+      {/* https://chakra-ui.com/docs/styled-system/color-mode */}
+      {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} type={'cookie'} /> */}
       <ChakraProvider theme={theme}>{children}</ChakraProvider>
-    </>
+    </React.Fragment>
   );
 }
