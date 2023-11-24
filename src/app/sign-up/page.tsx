@@ -55,13 +55,13 @@ const SignUp: React.FC<SignUpProps> = () => {
         >
           {({ isSubmitting }: FormikState<FormValues> & FormikHandlers) => (
             <Form className={styles.form}>
-              <FormField<FormValues>
+              <FormField
                 id={'username'}
                 name="username"
                 label="Username"
                 placeholder="Enter your username"
               />
-              <FormField<FormValues>
+              <FormField
                 id={'password'}
                 name="password"
                 label="Password"
