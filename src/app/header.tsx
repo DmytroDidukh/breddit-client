@@ -1,11 +1,11 @@
 'use client';
 
-import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Box, Heading, IconButton, useColorMode } from '@chakra-ui/react';
+// import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { Box, Heading } from '@chakra-ui/react';
 import React from 'react';
 
 function Header() {
-  const { colorMode, toggleColorMode } = useColorMode();
+  // const { colorMode, toggleColorMode } = useColorMode();
   return (
     <Box
       height={'60px'}
@@ -18,12 +18,13 @@ function Header() {
     >
       {/* TODO: Fix color mode colors for text */}
       <Heading>Breddit</Heading>
-      <IconButton
-        aria-label="Color mode"
-        colorScheme={'teal'}
-        icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />}
-        onClick={toggleColorMode}
-      />
+      {/* TODO: Disabled due it requires setting up all used components */}
+      {/* <IconButton */}
+      {/*   aria-label="Color mode" */}
+      {/*   colorScheme={'teal'} */}
+      {/*   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />} */}
+      {/*   onClick={toggleColorMode} */}
+      {/* /> */}
     </Box>
   );
 }

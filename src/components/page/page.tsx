@@ -11,9 +11,9 @@ const Page: React.FC<PageProps> = ({ variant = 'regular', children }) => {
     <Box
       as={'main'}
       p={'50px'}
-      mb={'50px'}
       mx={'auto'}
       width={'100%'}
+      height={'calc(100vh - 60px)'}
       maxW={variant === 'regular' ? '1200px' : '400px'}
       borderLeftWidth="1px"
       borderRightWidth="1px"
