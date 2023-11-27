@@ -1,29 +1,34 @@
 'use client';
+
 import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import Link from 'next/link';
 import React from 'react';
+import { useMutation } from 'urql';
 
 import { FormField, Page } from '@/components';
+import { SIGN_UP_MUTATION } from '@/graphql/mutations';
 
 import styles from './page.module.scss';
 
-interface SignUpProps {}
+interface ISignUpProps {}
 
-interface FormValues {
+interface IFormValues {
   username: string;
   password: string;
 }
 
-const initialValues: FormValues = {
+const initialValues: IFormValues = {
   username: '',
   password: '',
 };
 
-const SignUp: React.FC<SignUpProps> = () => {
-  const validate = (values: FormValues) => {
-    const errors: FormikErrors<FormValues> = {};
+const SignUp: React.FC<ISignUpProps> = () => {
+  const [result, executeMutation] = useMutation(SIGN_UP_MUTATION);
+
+  const validate = (values: IFormValues) => {
+    const errors: FormikErrors<IFormValues> = {};
     if (!values.username.trim()) {
       errors.username = 'Required';
     }
@@ -34,6 +39,12 @@ const SignUp: React.FC<SignUpProps> = () => {
     return errors;
   };
 
+  const handleSubmit = async (values: IFormValues) => {
+    console.log('SUBMIT', values);
+    const { data } = await executeMutation({ user: values });
+    console.log('data', data);
+  };
+  console.log('result', result);
   return (
     <Page>
       <Box
@@ -46,14 +57,8 @@ const SignUp: React.FC<SignUpProps> = () => {
         margin={'0 auto'}
       >
         <Heading textAlign={'center'}>Welcome!</Heading>
-        <Formik
-          initialValues={initialValues}
-          validate={validate}
-          onSubmit={(values) => {
-            console.log('SUBMIT', values);
-          }}
-        >
-          {({ isSubmitting }: FormikState<FormValues> & FormikHandlers) => (
+        <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
+          {({ isSubmitting }: FormikState<IFormValues> & FormikHandlers) => (
             <Form className={styles.form}>
               <FormField
                 id={'username'}
