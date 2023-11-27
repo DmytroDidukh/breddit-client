@@ -1,9 +1,11 @@
 import React from 'react';
 
 import Header from '@/app/header';
-import { Theme } from '@/app/theme';
 
 import type { Metadata } from 'next';
+
+import ApiProvider from './api-provider';
+import { ThemeProvider } from './theme-provider';
 
 export const metadata: Metadata = {
   title: 'Breddit',
@@ -14,10 +16,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <Theme>
-          <Header />
-          {children}
-        </Theme>
+        <ApiProvider>
+          <ThemeProvider>
+            <Header />
+            {children}
+          </ThemeProvider>
+        </ApiProvider>
       </body>
     </html>
   );

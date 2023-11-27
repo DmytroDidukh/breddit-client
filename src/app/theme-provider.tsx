@@ -34,7 +34,7 @@ const config: ThemeConfig = {
 
 export const theme = extendTheme({ styles, fonts, config });
 
-export function Theme({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
     <CacheProvider>
       {/* TODO: Add color mode toggle and fix script error */}
