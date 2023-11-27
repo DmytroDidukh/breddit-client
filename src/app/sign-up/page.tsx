@@ -45,7 +45,7 @@ const SignUp: React.FC<SignUpProps> = () => {
         height={'100%'}
         margin={'0 auto'}
       >
-        <Heading textAlign={'center'}>Sign Up</Heading>
+        <Heading textAlign={'center'}>Welcome!</Heading>
         <Formik
           initialValues={initialValues}
           validate={validate}
@@ -75,7 +75,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 isLoading={isSubmitting}
                 type="submit"
               >
-                Submit
+                Sign Up
               </Button>
             </Form>
           )}
