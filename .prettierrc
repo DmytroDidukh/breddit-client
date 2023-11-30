@@ -7,7 +7,7 @@
   "arrowParens": "always",
   "overrides": [
     {
-      "files": "*.{js,ts,json}",
+      "files": "*.{js,ts,tsx,json}",
       "options": {
         "tabWidth": 4
       }
