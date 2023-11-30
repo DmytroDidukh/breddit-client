@@ -1,6 +1,29 @@
 import { gql } from '@urql/core';
 
-export const SIGN_UP_MUTATION = gql`
+import { type IUser } from '@/types';
+
+interface ISignUpInput {
+    username: string;
+    password: string;
+}
+
+interface IFieldError {
+    field: string;
+    message: string;
+}
+
+interface ISignUpResult {
+    signUp: {
+        user: IUser | null;
+        errors: IFieldError[];
+    };
+}
+
+interface ISignUpVariables {
+    user: ISignUpInput;
+}
+
+export const SIGN_UP_MUTATION = gql(`
     mutation SignUp($user: SignUpInput!) {
         signUp(user: $user) {
             user {
@@ -15,4 +38,6 @@ export const SIGN_UP_MUTATION = gql`
             }
         }
     }
-`;
+`);
+
+export type { ISignUpInput, IFieldError, ISignUpResult, ISignUpVariables };
