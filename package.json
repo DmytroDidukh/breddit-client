@@ -10,7 +10,8 @@
     "check-ts": "tsc --noEmit",
     "lint:ts": "eslint 'src/**/*.{ts,tsx}' --fix",
     "prettier:write:ts": "prettier --write 'src/**/*.{ts,tsx}'",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "husky": {
     "hooks": {
@@ -39,6 +40,10 @@
     "urql": "~4.0.6"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/client-preset": "4.1.0",
+    "@graphql-codegen/near-operation-file-preset": "~3.0.0",
+    "@graphql-codegen/typescript-urql": "^4.0.0",
     "@types/node": "~20.9.2",
     "@types/react": "~18",
     "@types/react-dom": "~18",

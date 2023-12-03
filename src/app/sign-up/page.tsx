@@ -15,34 +15,26 @@ import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import Link from 'next/link';
 import React from 'react';
-import { useMutation } from 'urql';
 
 import { FormField, Page } from '@/components';
-import {
-    type IFieldError,
-    type ISignUpInput,
-    type ISignUpResult,
-    type ISignUpVariables,
-    SIGN_UP_MUTATION,
-} from '@/graphql/mutations';
+import { FieldError, SignUpInput } from '@/gql/graphql';
+import { useSignUpMutation } from '@/graphql/mutations';
 
 import styles from './page.module.scss';
 
 interface ISignUpProps {}
 
-const initialValues: ISignUpInput = {
+const initialValues: SignUpInput = {
     username: '',
     password: '',
 };
 
 const SignUp: React.FC<ISignUpProps> = () => {
-    const [error, setError] = React.useState<IFieldError | null>(null);
-    const [result, executeMutation] = useMutation<ISignUpResult, ISignUpVariables>(
-        SIGN_UP_MUTATION,
-    );
+    const [error, setError] = React.useState<FieldError | null>(null);
+    const [result, executeSignUp] = useSignUpMutation();
 
-    const validate = (values: ISignUpInput) => {
-        const errors: FormikErrors<ISignUpInput> = {};
+    const validate = (values: SignUpInput) => {
+        const errors: FormikErrors<SignUpInput> = {};
         if (!values.username.trim()) {
             errors.username = 'Required';
         }
@@ -53,10 +45,11 @@ const SignUp: React.FC<ISignUpProps> = () => {
         return errors;
     };
 
-    const handleSubmit = async (values: ISignUpInput) => {
-        const { data } = await executeMutation({ user: values });
+    const handleSubmit = async (values: SignUpInput) => {
+        setError(null);
+        const { data } = await executeSignUp({ user: values });
 
-        if (data?.signUp.errors.length) {
+        if (data?.signUp.errors?.length) {
             setError(data?.signUp.errors[0]);
         }
     };
@@ -74,7 +67,7 @@ const SignUp: React.FC<ISignUpProps> = () => {
             >
                 <Heading textAlign={'center'}>Welcome!</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<ISignUpInput> & FormikHandlers) => (
+                    {({ isSubmitting }: FormikState<SignUpInput> & FormikHandlers) => (
                         <Form className={styles.form}>
                             <FormField
                                 id={'username'}
