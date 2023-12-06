@@ -17,8 +17,8 @@ import Link from 'next/link';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
-import { FieldError, SignUpInput } from '@/gql/graphql';
 import { useSignUpMutation } from '@/graphql/mutations';
+import { FieldError, SignUpInput } from '@/graphql/types';
 
 import styles from './page.module.scss';
 

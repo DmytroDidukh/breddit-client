@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 
-import * as Types from '../../gql/graphql';
+import * as Types from '../types';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type SignUpMutationVariables = Types.Exact<{
     user: Types.SignUpInput;
