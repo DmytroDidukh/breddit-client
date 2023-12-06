@@ -12,13 +12,14 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
-import { FormikState } from 'formik/dist/types';
+import { FormikHelpers, FormikState } from 'formik/dist/types';
 import Link from 'next/link';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
 import { useSignUpMutation } from '@/graphql/mutations';
-import { FieldError, SignUpInput } from '@/graphql/types';
+import { SignUpInput } from '@/graphql/types';
+import { mapService } from '@/utils';
 
 import styles from './page.module.scss';
 
@@ -30,7 +31,7 @@ const initialValues: SignUpInput = {
 };
 
 const SignUp: React.FC<ISignUpProps> = () => {
-    const [error, setError] = React.useState<FieldError | null>(null);
+    const [globalError, setGlobalError] = React.useState<Error | null>(null);
     const [result, executeSignUp] = useSignUpMutation();
 
     const validate = (values: SignUpInput) => {
@@ -45,12 +46,17 @@ const SignUp: React.FC<ISignUpProps> = () => {
         return errors;
     };
 
-    const handleSubmit = async (values: SignUpInput) => {
-        setError(null);
-        const { data } = await executeSignUp({ user: values });
+    const handleSubmit = async (values: SignUpInput, { setErrors }: FormikHelpers<SignUpInput>) => {
+        setGlobalError(null);
+        const { data, error } = await executeSignUp({ user: values });
 
         if (data?.signUp.errors?.length) {
-            setError(data?.signUp.errors[0]);
+            setErrors(mapService.toFormError(data.signUp.errors));
+            return;
+        }
+
+        if (error) {
+            setGlobalError(error);
         }
     };
     console.log('result', result);
@@ -91,11 +97,22 @@ const SignUp: React.FC<ISignUpProps> = () => {
                             >
                                 Sign up
                             </Button>
-                            {error && (
-                                <Alert status="error" borderRadius={8}>
-                                    <AlertIcon />
-                                    <AlertTitle>Wrong username or password.</AlertTitle>
-                                    <AlertDescription>{error.message}</AlertDescription>
+                            {globalError && (
+                                <Alert
+                                    status="error"
+                                    borderRadius={8}
+                                    flexDirection={'column'}
+                                    alignItems={'start'}
+                                >
+                                    <Box display={'inline-flex'} alignItems={'center'}>
+                                        <AlertIcon />
+                                        <AlertTitle as={'span'}>
+                                            Something unexpected happen.
+                                        </AlertTitle>
+                                    </Box>
+                                    <AlertDescription as={'span'} paddingLeft={'33px'}>
+                                        {globalError.message}
+                                    </AlertDescription>
                                 </Alert>
                             )}
                         </Form>
