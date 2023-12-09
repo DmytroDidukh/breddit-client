@@ -53,16 +53,19 @@ const SignIn: React.FC<SignInProps> = () => {
         setGlobalError(null);
         const { data, error } = await executeSignIn({ user: values });
 
-        if (data?.signIn.user) {
-            router.push('/');
-            return;
-        } else if (data?.signIn.errors) {
-            setGlobalError(data?.signIn.errors[0]);
+        if (error) {
+            setGlobalError(error);
             return;
         }
 
-        if (error) {
-            setGlobalError(error);
+        if (data?.signIn.user) {
+            router.push('/');
+            return;
+        }
+
+        if (data?.signIn.errors) {
+            setGlobalError(data.signIn.errors[0]);
+            return;
         }
     };
 
