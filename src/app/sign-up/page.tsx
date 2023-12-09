@@ -14,12 +14,13 @@ import {
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
 import { useSignUpMutation } from '@/graphql/mutations';
 import { SignUpInput } from '@/graphql/types';
-import { mapService } from '@/utils';
+import { MapService } from '@/utils';
 
 import styles from './page.module.scss';
 
@@ -32,7 +33,8 @@ const initialValues: SignUpInput = {
 
 const SignUp: React.FC<ISignUpProps> = () => {
     const [globalError, setGlobalError] = React.useState<Error | null>(null);
-    const [result, executeSignUp] = useSignUpMutation();
+    const [, executeSignUp] = useSignUpMutation();
+    const router = useRouter();
 
     const validate = (values: SignUpInput) => {
         const errors: FormikErrors<SignUpInput> = {};
@@ -50,8 +52,11 @@ const SignUp: React.FC<ISignUpProps> = () => {
         setGlobalError(null);
         const { data, error } = await executeSignUp({ user: values });
 
-        if (data?.signUp.errors?.length) {
-            setErrors(mapService.toFormError(data.signUp.errors));
+        if (data?.signUp.user) {
+            router.push('/');
+            return;
+        } else if (data?.signUp.errors) {
+            setErrors(MapService.toFormError(data.signUp.errors));
             return;
         }
 
@@ -59,7 +64,7 @@ const SignUp: React.FC<ISignUpProps> = () => {
             setGlobalError(error);
         }
     };
-    console.log('result', result);
+
     return (
         <Page>
             <Box

@@ -1,7 +1,7 @@
 import { FieldError } from '@/graphql/types';
 
 class MapService {
-    public toFormError(errors: FieldError[]) {
+    static toFormError(errors: FieldError[]) {
         return errors.reduce(
             (acc, error) => {
                 acc[error.field] = error.message;
@@ -12,6 +12,4 @@ class MapService {
     }
 }
 
-const mapService = new MapService();
-
-export { mapService };
+export { MapService };
