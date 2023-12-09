@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
+import { GraphQLFormattedError } from 'graphql/error';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -24,15 +25,15 @@ import { MapService } from '@/utils';
 
 import styles from './page.module.scss';
 
-interface ISignUpProps {}
+interface SignUpProps {}
 
 const initialValues: SignUpInput = {
     username: '',
     password: '',
 };
 
-const SignUp: React.FC<ISignUpProps> = () => {
-    const [globalError, setGlobalError] = React.useState<Error | null>(null);
+const SignUp: React.FC<SignUpProps> = () => {
+    const [globalError, setGlobalError] = React.useState<GraphQLFormattedError | null>(null);
     const [, executeSignUp] = useSignUpMutation();
     const router = useRouter();
 
