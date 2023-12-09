@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
+import { Routes } from '@/consts';
 import { useSignInMutation } from '@/graphql/mutations/sign-in.generated';
 import { AuthenticationError, SignInInput } from '@/graphql/types';
 
@@ -59,7 +60,7 @@ const SignIn: React.FC<SignInProps> = () => {
         }
 
         if (data?.signIn.user) {
-            router.push('/');
+            router.push(Routes.HOME);
             return;
         }
 
@@ -117,7 +118,7 @@ const SignIn: React.FC<SignInProps> = () => {
                 </Formik>
                 <Text textAlign={'center'} mt={'10px'}>
                     Haven&apos;t an account? Please{' '}
-                    <ChakraLink as={Link} href="/sign-up" color="teal.500">
+                    <ChakraLink as={Link} href={Routes.SIGN_UP} color="teal.500">
                         sign-up
                     </ChakraLink>
                     .

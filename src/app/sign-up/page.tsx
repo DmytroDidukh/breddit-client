@@ -19,6 +19,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
+import { Routes } from '@/consts';
 import { useSignUpMutation } from '@/graphql/mutations';
 import { SignUpInput } from '@/graphql/types';
 import { MapService } from '@/utils';
@@ -54,7 +55,7 @@ const SignUp: React.FC<SignUpProps> = () => {
         const { data, error } = await executeSignUp({ user: values });
 
         if (data?.signUp.user) {
-            router.push('/');
+            router.push(Routes.HOME);
             return;
         } else if (data?.signUp.errors) {
             setErrors(MapService.toFormError(data.signUp.errors));
@@ -126,7 +127,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                 </Formik>
                 <Text textAlign={'center'} mt={'10px'}>
                     Have an account? Please{' '}
-                    <ChakraLink as={Link} href="/sign-in" color="teal.500">
+                    <ChakraLink as={Link} href={Routes.SIGN_IN} color="teal.500">
                         sign-in
                     </ChakraLink>
                     .

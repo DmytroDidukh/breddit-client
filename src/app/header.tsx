@@ -1,11 +1,19 @@
 'use client';
 
 // import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Button, Heading } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import { Routes } from '@/consts';
+
 function Header() {
+    const router = useRouter();
     // const { colorMode, toggleColorMode } = useColorMode();
+    const handleSignOut = () => {
+        router.push(Routes.SIGN_IN);
+    };
+
     return (
         <Box
             height={'60px'}
@@ -25,6 +33,15 @@ function Header() {
             {/*   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />} */}
             {/*   onClick={toggleColorMode} */}
             {/* /> */}
+            <Button
+                size={'sm'}
+                width={'80px'}
+                colorScheme="teal"
+                variant={'outline'}
+                onClick={handleSignOut}
+            >
+                Sign out
+            </Button>
         </Box>
     );
 }
