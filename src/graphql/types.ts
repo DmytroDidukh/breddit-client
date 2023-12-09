@@ -19,6 +19,11 @@ export type Scalars = {
     DateTimeISO: { input: any; output: any };
 };
 
+export type AuthenticationError = {
+    __typename?: 'AuthenticationError';
+    message: Scalars['String']['output'];
+};
+
 export type FieldError = {
     __typename?: 'FieldError';
     field: Scalars['String']['output'];
@@ -87,7 +92,7 @@ export type SignInInput = {
 
 export type SignInResult = {
     __typename?: 'SignInResult';
-    errors?: Maybe<Array<UnauthorizedError>>;
+    errors?: Maybe<Array<AuthenticationError>>;
     user?: Maybe<User>;
 };
 
@@ -100,11 +105,6 @@ export type SignUpResult = {
     __typename?: 'SignUpResult';
     errors?: Maybe<Array<FieldError>>;
     user?: Maybe<User>;
-};
-
-export type UnauthorizedError = {
-    __typename?: 'UnauthorizedError';
-    message: Scalars['String']['output'];
 };
 
 export type User = {
