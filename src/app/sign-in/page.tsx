@@ -2,7 +2,6 @@
 
 import {
     Alert,
-    AlertDescription,
     AlertIcon,
     AlertTitle,
     Box,
@@ -12,33 +11,34 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
-import { FormikHelpers, FormikState } from 'formik/dist/types';
+import { FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FormField, Page } from '@/components';
-import { useSignUpMutation } from '@/graphql/mutations';
-import { SignUpInput } from '@/graphql/types';
-import { MapService } from '@/utils';
+import { useSignInMutation } from '@/graphql/mutations/sign-in.generated';
+import { AuthenticationError, SignInInput } from '@/graphql/types';
 
 import styles from './page.module.scss';
 
-interface SignUpProps {}
+interface SignInProps {}
 
-const initialValues: SignUpInput = {
+const initialValues: SignInInput = {
     username: '',
     password: '',
 };
 
-const SignUp: React.FC<SignUpProps> = () => {
-    const [globalError, setGlobalError] = React.useState<GraphQLFormattedError | null>(null);
-    const [, executeSignUp] = useSignUpMutation();
+const SignIn: React.FC<SignInProps> = () => {
+    const [globalError, setGlobalError] = React.useState<
+        GraphQLFormattedError | AuthenticationError | null
+    >(null);
+    const [, executeSignIn] = useSignInMutation();
     const router = useRouter();
 
-    const validate = (values: SignUpInput) => {
-        const errors: FormikErrors<SignUpInput> = {};
+    const validate = (values: SignInInput) => {
+        const errors: FormikErrors<SignInInput> = {};
         if (!values.username.trim()) {
             errors.username = 'Required';
         }
@@ -49,15 +49,15 @@ const SignUp: React.FC<SignUpProps> = () => {
         return errors;
     };
 
-    const handleSubmit = async (values: SignUpInput, { setErrors }: FormikHelpers<SignUpInput>) => {
+    const handleSubmit = async (values: SignInInput) => {
         setGlobalError(null);
-        const { data, error } = await executeSignUp({ user: values });
+        const { data, error } = await executeSignIn({ user: values });
 
-        if (data?.signUp.user) {
+        if (data?.signIn.user) {
             router.push('/');
             return;
-        } else if (data?.signUp.errors) {
-            setErrors(MapService.toFormError(data.signUp.errors));
+        } else if (data?.signIn.errors) {
+            setGlobalError(data?.signIn.errors[0]);
             return;
         }
 
@@ -77,9 +77,9 @@ const SignUp: React.FC<SignUpProps> = () => {
                 height={'100%'}
                 margin={'0 auto'}
             >
-                <Heading textAlign={'center'}>Create Your Account</Heading>
+                <Heading textAlign={'center'}>Sign In to Your Account</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<SignUpInput> & FormikHandlers) => (
+                    {({ isSubmitting }: FormikState<SignInInput> & FormikHandlers) => (
                         <Form className={styles.form}>
                             <FormField
                                 id={'username'}
@@ -101,33 +101,21 @@ const SignUp: React.FC<SignUpProps> = () => {
                                 isLoading={isSubmitting}
                                 type="submit"
                             >
-                                Sign up
+                                Sign in
                             </Button>
                             {globalError && (
-                                <Alert
-                                    status="error"
-                                    borderRadius={8}
-                                    flexDirection={'column'}
-                                    alignItems={'start'}
-                                >
-                                    <Box display={'inline-flex'} alignItems={'center'}>
-                                        <AlertIcon />
-                                        <AlertTitle as={'span'}>
-                                            Something unexpected happen.
-                                        </AlertTitle>
-                                    </Box>
-                                    <AlertDescription as={'span'} paddingLeft={'33px'}>
-                                        {globalError.message}
-                                    </AlertDescription>
+                                <Alert status="error" borderRadius={8}>
+                                    <AlertIcon />
+                                    <AlertTitle as={'span'}>{globalError.message}</AlertTitle>
                                 </Alert>
                             )}
                         </Form>
                     )}
                 </Formik>
                 <Text textAlign={'center'} mt={'10px'}>
-                    Have an account? Please{' '}
-                    <ChakraLink as={Link} href="/sign-in" color="teal.500">
-                        sign-in
+                    Haven&apos;t an account? Please{' '}
+                    <ChakraLink as={Link} href="/sign-up" color="teal.500">
+                        sign-up
                     </ChakraLink>
                     .
                 </Text>
@@ -136,4 +124,4 @@ const SignUp: React.FC<SignUpProps> = () => {
     );
 };
 
-export default SignUp;
+export default SignIn;
