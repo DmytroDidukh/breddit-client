@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import * as Urql from 'urql';
 
+import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
 import * as Types from '../types';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type SignUpMutationVariables = Types.Exact<{
@@ -14,9 +15,9 @@ export type SignUpMutation = {
         user?: {
             __typename?: 'User';
             id: number;
+            username: string;
             createdAt: any;
             updatedAt: any;
-            username: string;
         } | null;
         errors?: Array<{ __typename?: 'FieldError'; field: string; message: string }> | null;
     };
@@ -26,10 +27,7 @@ export const SignUpDocument = gql`
     mutation SignUp($user: SignUpInput!) {
         signUp(user: $user) {
             user {
-                id
-                createdAt
-                updatedAt
-                username
+                ...RegularUser
             }
             errors {
                 field
@@ -37,6 +35,7 @@ export const SignUpDocument = gql`
             }
         }
     }
+    ${RegularUserFragmentDoc}
 `;
 
 export function useSignUpMutation() {

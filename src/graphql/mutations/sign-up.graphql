@@ -1,10 +1,7 @@
 mutation SignUp($user: SignUpInput!) {
     signUp(user: $user) {
         user {
-            id
-            createdAt
-            updatedAt
-            username
+            ...RegularUser
         }
         errors {
             field
