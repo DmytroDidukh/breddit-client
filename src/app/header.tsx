@@ -1,15 +1,18 @@
 'use client';
 
 // import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import { Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
+import { useMeQuery } from '@/graphql/mutations/queries/me.generated';
 
 function Header() {
+    const [result] = useMeQuery();
     const router = useRouter();
     // const { colorMode, toggleColorMode } = useColorMode();
+
     const handleSignOut = () => {
         router.push(Routes.SIGN_IN);
     };
@@ -33,15 +36,20 @@ function Header() {
             {/*   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />} */}
             {/*   onClick={toggleColorMode} */}
             {/* /> */}
-            <Button
-                size={'sm'}
-                width={'80px'}
-                colorScheme="teal"
-                variant={'outline'}
-                onClick={handleSignOut}
-            >
-                Sign out
-            </Button>
+            {result.data?.me && (
+                <Flex alignItems={'center'} gap={'12px'}>
+                    <Text as={'b'}>{result.data.me.username}</Text>
+                    <Button
+                        size={'sm'}
+                        width={'80px'}
+                        colorScheme="teal"
+                        variant={'outline'}
+                        onClick={handleSignOut}
+                    >
+                        Sign out
+                    </Button>
+                </Flex>
+            )}
         </Box>
     );
 }
