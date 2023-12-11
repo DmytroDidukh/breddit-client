@@ -1,11 +1,13 @@
 'use client';
 
 import React from 'react';
-import { cacheExchange, Client, fetchExchange, Provider } from 'urql';
+import { Client, dedupExchange, fetchExchange, Provider } from 'urql';
+
+import { getCacheExtenge } from '@/utils';
 
 const client = new Client({
     url: 'http://localhost:4000/graphql',
-    exchanges: [cacheExchange, fetchExchange],
+    exchanges: [dedupExchange, getCacheExtenge(), fetchExchange],
     fetchOptions: {
         credentials: 'include',
     },
