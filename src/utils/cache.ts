@@ -2,6 +2,7 @@ import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
 
 import { SignUpMutation } from '@/graphql/mutations';
 import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
+import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
 
 function betterUpdateQuery<Result, Query>(
@@ -47,6 +48,14 @@ function getCacheExchange() {
                                 };
                             }
                         },
+                    );
+                },
+                signOut: (_result: SignOutMutation, _, _cache) => {
+                    betterUpdateQuery<SignOutMutation, MeQuery>(
+                        _cache,
+                        { query: MeDocument },
+                        _result,
+                        () => ({ me: null }),
                     );
                 },
             },

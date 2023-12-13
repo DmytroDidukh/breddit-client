@@ -6,14 +6,17 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
+import { useSignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { useMeQuery } from '@/graphql/queries/me.generated';
 
 function Header() {
+    const [{ fetching }, executeSignOut] = useSignOutMutation();
     const [result] = useMeQuery();
     const router = useRouter();
     // const { colorMode, toggleColorMode } = useColorMode();
 
-    const handleSignOut = () => {
+    const handleSignOut = async () => {
+        await executeSignOut({});
         router.push(Routes.SIGN_IN);
     };
 
@@ -45,6 +48,7 @@ function Header() {
                         colorScheme="teal"
                         variant={'outline'}
                         onClick={handleSignOut}
+                        isLoading={fetching}
                     >
                         Sign out
                     </Button>
