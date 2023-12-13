@@ -36,6 +36,7 @@ export type Mutation = {
     deletePost: Scalars['Boolean']['output'];
     deleteUser: Scalars['Boolean']['output'];
     signIn: SignInResult;
+    signOut: Scalars['Boolean']['output'];
     signUp: SignUpResult;
     updatePost?: Maybe<Post>;
 };

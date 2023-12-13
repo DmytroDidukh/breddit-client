@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
-import { useMeQuery } from '@/graphql/mutations/queries/me.generated';
+import { useMeQuery } from '@/graphql/queries/me.generated';
 
 function Header() {
     const [result] = useMeQuery();

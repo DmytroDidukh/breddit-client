@@ -1,8 +1,8 @@
 import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
 
 import { SignUpMutation } from '@/graphql/mutations';
-import { MeDocument, MeQuery } from '@/graphql/mutations/queries/me.generated';
 import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
+import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
 
 function betterUpdateQuery<Result, Query>(
     cache: Cache,
@@ -13,7 +13,7 @@ function betterUpdateQuery<Result, Query>(
     return cache.updateQuery(query, (data) => fn(result, data as any) as any);
 }
 
-function getCacheExtenge() {
+function getCacheExchange() {
     return cacheExchange({
         updates: {
             Mutation: {
@@ -54,4 +54,4 @@ function getCacheExtenge() {
     });
 }
 
-export { getCacheExtenge };
+export { getCacheExchange };
