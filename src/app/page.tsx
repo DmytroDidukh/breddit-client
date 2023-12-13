@@ -1,12 +1,26 @@
-import { Page } from '@/components';
+'use client';
 
-export default function Home() {
+import { Flex, Heading } from '@chakra-ui/react';
+
+import { Page } from '@/components';
+import { usePostsQuery } from '@/graphql/queries/posts.generated';
+
+function Home() {
+    const [postsResult] = usePostsQuery();
+
     return (
         <Page>
-            <h1>nicwe</h1>
-            <p>
-                <b>Sphinx</b> of black quartz, judge my vow.
-            </p>
+            <Heading>Posts</Heading>
+            <Flex flexDirection={'column'} gap={24}>
+                {postsResult.data?.posts.map((post) => (
+                    <div key={post.id}>
+                        <h2>{post.title}</h2>
+                        <p>{post.createdAt}</p>
+                    </div>
+                ))}
+            </Flex>
         </Page>
     );
 }
+
+export default Home;
