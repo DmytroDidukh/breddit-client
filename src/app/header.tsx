@@ -10,8 +10,8 @@ import { useSignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { useMeQuery } from '@/graphql/queries/me.generated';
 
 function Header() {
-    const [{ fetching }, executeSignOut] = useSignOutMutation();
-    const [result] = useMeQuery();
+    const [signOutResult, executeSignOut] = useSignOutMutation();
+    const [meResult] = useMeQuery();
     const router = useRouter();
     const pathname = usePathname();
     // const { colorMode, toggleColorMode } = useColorMode();
@@ -44,32 +44,35 @@ function Header() {
             {/*   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />} */}
             {/*   onClick={toggleColorMode} */}
             {/* /> */}
-            {result.data?.me && (
-                <Flex alignItems={'center'} gap={'12px'}>
-                    <Text as={'b'}>{result.data.me.username}</Text>
-                    <Button
-                        size={'sm'}
-                        width={'80px'}
-                        colorScheme="teal"
-                        variant={'outline'}
-                        onClick={handleSignOut}
-                        isLoading={fetching}
-                    >
-                        Sign out
-                    </Button>
-                </Flex>
-            )}
-            {pathname !== Routes.SIGN_IN && !result.data?.me && (
-                <Button
-                    size={'sm'}
-                    width={'80px'}
-                    colorScheme="teal"
-                    variant={'outline'}
-                    onClick={redirectToSignIn}
-                    isLoading={fetching}
-                >
-                    Sign in
-                </Button>
+            {!meResult.fetching && (
+                <>
+                    {meResult.data?.me && (
+                        <Flex alignItems={'center'} gap={'12px'}>
+                            <Text as={'b'}>{meResult.data.me.username}</Text>
+                            <Button
+                                size={'sm'}
+                                width={'80px'}
+                                colorScheme="teal"
+                                variant={'outline'}
+                                onClick={handleSignOut}
+                                isLoading={signOutResult.fetching}
+                            >
+                                Sign out
+                            </Button>
+                        </Flex>
+                    )}
+                    {pathname !== Routes.SIGN_IN && !meResult.data?.me && (
+                        <Button
+                            size={'sm'}
+                            width={'80px'}
+                            colorScheme="teal"
+                            variant={'outline'}
+                            onClick={redirectToSignIn}
+                        >
+                            Sign in
+                        </Button>
+                    )}
+                </>
             )}
         </Box>
     );
