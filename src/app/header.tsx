@@ -2,7 +2,7 @@
 
 // import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
@@ -13,11 +13,16 @@ function Header() {
     const [{ fetching }, executeSignOut] = useSignOutMutation();
     const [result] = useMeQuery();
     const router = useRouter();
+    const pathname = usePathname();
     // const { colorMode, toggleColorMode } = useColorMode();
+
+    const redirectToSignIn = () => {
+        router.push(Routes.SIGN_IN);
+    };
 
     const handleSignOut = async () => {
         await executeSignOut({});
-        router.push(Routes.SIGN_IN);
+        redirectToSignIn();
     };
 
     return (
@@ -53,6 +58,18 @@ function Header() {
                         Sign out
                     </Button>
                 </Flex>
+            )}
+            {pathname !== Routes.SIGN_IN && !result.data?.me && (
+                <Button
+                    size={'sm'}
+                    width={'80px'}
+                    colorScheme="teal"
+                    variant={'outline'}
+                    onClick={redirectToSignIn}
+                    isLoading={fetching}
+                >
+                    Sign in
+                </Button>
             )}
         </Box>
     );
