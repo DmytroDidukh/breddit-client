@@ -2473,6 +2473,11 @@
     "@urql/core" ">=4.2.0"
     wonka "^6.3.2"
 
+"@urql/next@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@urql/next/-/next-1.1.0.tgz#744ee1612598900043b62c4a7b62b1984c99f63f"
+  integrity sha512-yem5319hUn9cg+BIOMBRGb2Xt39Jusz4eu3Vdv0Fb5+mRLal644JxYpB98OBj0idBtMvl04zuJ69FGuHz4Aa6w==
+
 "@whatwg-node/events@^0.0.3":
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/@whatwg-node/events/-/events-0.0.3.tgz#13a65dd4f5893f55280f766e29ae48074927acad"
