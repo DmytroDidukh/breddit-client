@@ -1,6 +1,8 @@
+import { RequestCookie } from '@edge-runtime/cookies';
+
 import { FieldError } from '@/graphql/types';
 
-class MapService {
+class Mapper {
     static toFormError(errors: FieldError[]) {
         return errors.reduce(
             (acc, error) => {
@@ -10,6 +12,10 @@ class MapService {
             {} as Record<string, string>,
         );
     }
+
+    static toCookieString(cookies: RequestCookie[]) {
+        return cookies.map((cookie) => `${cookie.name}=${cookie.value}`).join('; ');
+    }
 }
 
-export { MapService };
+export { Mapper };

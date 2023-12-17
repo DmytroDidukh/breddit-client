@@ -1,20 +1,23 @@
 'use client';
 
+import { RequestCookie } from '@edge-runtime/cookies';
 import { UrqlProvider } from '@urql/next';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { createUrqlClient } from '@/lib';
 
 import Header from './header';
 import { ThemeProvider } from './theme-provider';
 
-function Layout({ children }: { children: React.ReactNode }) {
-    const { client, ssr } = React.useMemo(() => createUrqlClient(), []);
+function Layout({ children, cookies }: { children: React.ReactNode; cookies: RequestCookie[] }) {
+    const { client, ssr } = React.useMemo(() => createUrqlClient(cookies), []);
 
     return (
         <UrqlProvider client={client} ssr={ssr}>
             <ThemeProvider>
-                <Header />
+                <Suspense>
+                    <Header />
+                </Suspense>
                 {children}
             </ThemeProvider>
         </UrqlProvider>

@@ -1,5 +1,4 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import { gql, useMutation } from '@urql/next';
 
 import * as Types from '../types';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -14,5 +13,5 @@ export const SignOutDocument = gql`
 `;
 
 export function useSignOutMutation() {
-    return Urql.useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument);
+    return useMutation<SignOutMutation, SignOutMutationVariables>(SignOutDocument);
 }

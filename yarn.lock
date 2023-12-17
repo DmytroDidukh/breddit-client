@@ -1328,6 +1328,11 @@
   resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-2.2.0.tgz#9b0ecef8f01263ab808ba3bda7b36a0d91b4d5c1"
   integrity sha512-KmKDg01SrQ7VbTD3+cPWf/UfpF5MSwm3v7MWi0n5t8HnnadT13MF0MJCDSXbBWnzLv1ZKJ6zlyAOeARWX+DpjQ==
 
+"@edge-runtime/cookies@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@edge-runtime/cookies/-/cookies-4.0.2.tgz#001d8447939c47e4d4d5483bfa0d0ae1e113bbda"
+  integrity sha512-BphVamVz/yt9FN1b60ZXp+iTJVRLUHI0POxKYZG3gn+RsP+M0phqS87Z9JnDn2YOsPx9SRhhrN9AB7yhpexNEw==
+
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz#c2d872b6a7767a9d176d007f5b31f7d504bb5d6c"

@@ -1,5 +1,4 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
 import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
 import * as Types from '../types';
@@ -26,6 +25,6 @@ export const MeDocument = gql`
     ${RegularUserFragmentDoc}
 `;
 
-export function useMeQuery(options?: Omit<Urql.UseQueryArgs<MeQueryVariables>, 'query'>) {
-    return Urql.useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
+export function useMeQuery(options?: Omit<UseQueryArgs<MeQueryVariables>, 'query'>) {
+    return useQuery<MeQuery, MeQueryVariables>({ query: MeDocument, ...options });
 }

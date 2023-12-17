@@ -1,5 +1,4 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import { gql, useMutation } from '@urql/next';
 
 import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
 import * as Types from '../types';
@@ -39,5 +38,5 @@ export const SignUpDocument = gql`
 `;
 
 export function useSignUpMutation() {
-    return Urql.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument);
+    return useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument);
 }

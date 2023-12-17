@@ -1,5 +1,4 @@
-import gql from 'graphql-tag';
-import * as Urql from 'urql';
+import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
 import * as Types from '../types';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
@@ -27,6 +26,6 @@ export const PostsDocument = gql`
     }
 `;
 
-export function usePostsQuery(options?: Omit<Urql.UseQueryArgs<PostsQueryVariables>, 'query'>) {
-    return Urql.useQuery<PostsQuery, PostsQueryVariables>({ query: PostsDocument, ...options });
+export function usePostsQuery(options?: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {
+    return useQuery<PostsQuery, PostsQueryVariables>({ query: PostsDocument, ...options });
 }

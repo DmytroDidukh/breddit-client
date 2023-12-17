@@ -22,7 +22,7 @@ import { FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignUpMutation } from '@/graphql/mutations';
 import { SignUpInput } from '@/graphql/types';
-import { MapService } from '@/utils';
+import { Mapper } from '@/utils';
 
 import styles from './page.module.scss';
 
@@ -58,7 +58,7 @@ const SignUp: React.FC<SignUpProps> = () => {
             router.push(Routes.HOME);
             return;
         } else if (data?.signUp.errors) {
-            setErrors(MapService.toFormError(data.signUp.errors));
+            setErrors(Mapper.toFormError(data.signUp.errors));
             return;
         }
 
