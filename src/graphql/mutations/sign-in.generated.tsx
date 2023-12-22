@@ -15,6 +15,7 @@ export type SignInMutation = {
             __typename?: 'User';
             id: number;
             username: string;
+            email: string;
             createdAt: any;
             updatedAt: any;
         } | null;
