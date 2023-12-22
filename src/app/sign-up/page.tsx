@@ -31,6 +31,7 @@ interface SignUpProps {}
 const initialValues: SignUpInput = {
     username: '',
     password: '',
+    email: '',
 };
 
 const SignUp: React.FC<SignUpProps> = () => {
@@ -94,6 +95,12 @@ const SignUp: React.FC<SignUpProps> = () => {
                                 label="Password"
                                 placeholder="Enter your password"
                                 type={'password'}
+                            />
+                            <FormField
+                                id={'email'}
+                                name="email"
+                                label="Email"
+                                placeholder="Enter your email"
                             />
                             <Button
                                 width={'100%'}
