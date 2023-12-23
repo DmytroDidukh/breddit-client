@@ -1,6 +1,6 @@
 import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
 
-import { SignUpMutation } from '@/graphql/mutations';
+import { ChangePasswordMutation, SignUpMutation } from '@/graphql/mutations';
 import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
 import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
@@ -56,6 +56,22 @@ function getCacheExchange() {
                         { query: MeDocument },
                         _result,
                         () => ({ me: null }),
+                    );
+                },
+                changePassword: (_result: ChangePasswordMutation, _, _cache) => {
+                    betterUpdateQuery<ChangePasswordMutation, MeQuery>(
+                        _cache,
+                        { query: MeDocument },
+                        _result,
+                        (result, query) => {
+                            if (result.changePassword.errors) {
+                                return query;
+                            } else {
+                                return {
+                                    me: result.changePassword.user,
+                                };
+                            }
+                        },
                     );
                 },
             },
