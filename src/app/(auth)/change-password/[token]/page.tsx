@@ -7,7 +7,7 @@ import { GraphQLFormattedError } from 'graphql/error';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import styles from '@/app/sign-in/page.module.scss';
+import styles from '@/app/(auth)/sign-in/page.module.scss';
 import { FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useChangePasswordMutation } from '@/graphql/mutations';
@@ -102,8 +102,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
                                 type={'password'}
                             />
                             <FormField
-                                id={'password'}
-                                name="password"
+                                id={'confirmPassword'}
+                                name="confirmPassword"
                                 label="Confirm Password"
                                 placeholder="Confirm new password"
                                 type={'password'}

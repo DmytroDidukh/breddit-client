@@ -63,7 +63,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                 height={'100%'}
                 margin={'0 auto'}
             >
-                <Heading textAlign={'center'}>Sign In to Your Account</Heading>
+                <Heading textAlign={'center'}>Reset Password</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
                     {({ isSubmitting }: FormikState<ForgotPasswordInput> & FormikHandlers) => (
                         // TODO: Move this to a separate shared component
