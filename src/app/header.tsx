@@ -6,8 +6,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
-import { useSignOutMutation } from '@/graphql/mutations/sign-out.generated';
-import { useMeQuery } from '@/graphql/queries/me.generated';
+import { useSignOutMutation } from '@/graphql/mutations';
+import { useMeQuery } from '@/graphql/queries';
 
 function Header() {
     const [signOutResult, executeSignOut] = useSignOutMutation();

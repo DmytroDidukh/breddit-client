@@ -3,7 +3,7 @@
 import { Flex, Heading } from '@chakra-ui/react';
 
 import { Page } from '@/components';
-import { usePostsQuery } from '@/graphql/queries/posts.generated';
+import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
     const [postsResult] = usePostsQuery();

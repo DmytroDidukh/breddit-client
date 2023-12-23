@@ -1,71 +1,78 @@
 'use client';
 
-import {
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    Button,
-    Link as ChakraLink,
-    Heading,
-    Text,
-} from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Box, Button, Heading } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
+import styles from '@/app/sign-in/page.module.scss';
 import { FormField, Page } from '@/components';
 import { Routes } from '@/consts';
-import { useSignInMutation } from '@/graphql/mutations';
-import { AuthenticationError, SignInInput } from '@/graphql/types';
+import { useChangePasswordMutation } from '@/graphql/mutations';
+import { AuthenticationError, ChangePasswordInput } from '@/graphql/types';
 
-import styles from './page.module.scss';
+interface ChangePasswordProps {
+    params: {
+        token: string;
+    };
+}
 
-interface SignInProps {}
+interface ChangePasswordClientInput extends Omit<ChangePasswordInput, 'token'> {
+    confirmPassword: string;
+}
 
-const initialValues: SignInInput = {
-    username: '',
+const initialValues: ChangePasswordClientInput = {
     password: '',
+    confirmPassword: '',
 };
 
-const SignIn: React.FC<SignInProps> = () => {
+const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
     const [globalError, setGlobalError] = React.useState<
         GraphQLFormattedError | AuthenticationError | null
     >(null);
-    const [, executeSignIn] = useSignInMutation();
+    const [, executeChangePassword] = useChangePasswordMutation();
     const router = useRouter();
 
-    const validate = (values: SignInInput) => {
-        const errors: FormikErrors<SignInInput> = {};
-        if (!values.username.trim()) {
-            errors.username = 'Required';
-        }
-
-        if (!values.password) {
+    const validate = (values: ChangePasswordClientInput) => {
+        const errors: FormikErrors<ChangePasswordClientInput> = {};
+        if (!values.password.trim()) {
             errors.password = 'Required';
         }
+
+        if (!values.confirmPassword.trim()) {
+            errors.confirmPassword = 'Required';
+        }
+
+        if (values.password !== values.confirmPassword) {
+            errors.confirmPassword = 'Passwords do not match';
+        }
+
         return errors;
     };
 
-    const handleSubmit = async (values: SignInInput) => {
+    const handleSubmit = async (values: ChangePasswordClientInput) => {
         setGlobalError(null);
-        const { data, error } = await executeSignIn({ user: values });
+        const { data, error } = await executeChangePassword({
+            options: {
+                password: values.password,
+                token: params.token,
+            },
+        });
 
         if (error) {
             setGlobalError(error);
             return;
         }
 
-        if (data?.signIn.user) {
+        if (data?.changePassword.user) {
             router.push(Routes.HOME);
             return;
         }
 
-        if (data?.signIn.errors) {
-            setGlobalError(data.signIn.errors[0]);
+        if (data?.changePassword.errors) {
+            setGlobalError(data.changePassword.errors[0]);
             return;
         }
     };
@@ -83,19 +90,22 @@ const SignIn: React.FC<SignInProps> = () => {
             >
                 <Heading textAlign={'center'}>Sign In to Your Account</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<SignInInput> & FormikHandlers) => (
+                    {({
+                        isSubmitting,
+                    }: FormikState<ChangePasswordClientInput> & FormikHandlers) => (
                         <Form className={styles.form}>
                             <FormField
-                                id={'username'}
-                                name="username"
-                                label="Username"
-                                placeholder="Enter your username"
+                                id={'password'}
+                                name="password"
+                                label="New Password"
+                                placeholder="Enter new password"
+                                type={'password'}
                             />
                             <FormField
                                 id={'password'}
                                 name="password"
-                                label="Password"
-                                placeholder="Enter your password"
+                                label="Confirm Password"
+                                placeholder="Confirm new password"
                                 type={'password'}
                             />
                             <Button
@@ -105,7 +115,7 @@ const SignIn: React.FC<SignInProps> = () => {
                                 isLoading={isSubmitting}
                                 type="submit"
                             >
-                                Sign in
+                                Change Password
                             </Button>
                             {globalError && (
                                 <Alert status="error" borderRadius={8}>
@@ -116,16 +126,9 @@ const SignIn: React.FC<SignInProps> = () => {
                         </Form>
                     )}
                 </Formik>
-                <Text textAlign={'center'} mt={'10px'}>
-                    Haven&apos;t an account? Please{' '}
-                    <ChakraLink as={Link} href={Routes.SIGN_UP} color="teal.500">
-                        sign-up
-                    </ChakraLink>
-                    .
-                </Text>
             </Box>
         </Page>
     );
 };
 
-export default SignIn;
+export default ChangePassword;
