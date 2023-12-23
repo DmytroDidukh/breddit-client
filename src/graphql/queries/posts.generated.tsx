@@ -1,7 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
 import * as Types from '../types';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type PostsQueryVariables = Types.Exact<{ [key: string]: never }>;
 
 export type PostsQuery = {

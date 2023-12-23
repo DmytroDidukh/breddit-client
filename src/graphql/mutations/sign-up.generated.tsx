@@ -2,7 +2,6 @@ import { gql, useMutation } from '@urql/next';
 
 import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
 import * as Types from '../types';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type SignUpMutationVariables = Types.Exact<{
     user: Types.SignUpInput;
 }>;

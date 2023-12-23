@@ -24,6 +24,17 @@ export type AuthenticationError = {
     message: Scalars['String']['output'];
 };
 
+export type ChangePasswordInput = {
+    password: Scalars['String']['input'];
+    token: Scalars['String']['input'];
+};
+
+export type ChangePasswordResult = {
+    __typename?: 'ChangePasswordResult';
+    errors?: Maybe<Array<FieldError>>;
+    user?: Maybe<User>;
+};
+
 export type FieldError = {
     __typename?: 'FieldError';
     field: Scalars['String']['output'];
@@ -32,6 +43,7 @@ export type FieldError = {
 
 export type Mutation = {
     __typename?: 'Mutation';
+    changePassword: ChangePasswordResult;
     createPost: Post;
     deletePost: Scalars['Boolean']['output'];
     deleteUser: Scalars['Boolean']['output'];
@@ -40,6 +52,10 @@ export type Mutation = {
     signOut: Scalars['Boolean']['output'];
     signUp: SignUpResult;
     updatePost?: Maybe<Post>;
+};
+
+export type MutationChangePasswordArgs = {
+    options: ChangePasswordInput;
 };
 
 export type MutationCreatePostArgs = {
