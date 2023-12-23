@@ -123,6 +123,11 @@ const SignIn: React.FC<SignInProps> = () => {
                     </ChakraLink>
                     .
                 </Text>
+                <Text textAlign={'center'} mt={'10px'}>
+                    <ChakraLink as={Link} href={Routes.FORGOT_PASSWORD} color="teal.500">
+                        Forgot Password
+                    </ChakraLink>
+                </Text>
             </Box>
         </Page>
     );
