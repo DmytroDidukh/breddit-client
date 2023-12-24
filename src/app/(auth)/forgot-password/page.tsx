@@ -73,6 +73,7 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                                 name="email"
                                 label="Email"
                                 placeholder="Enter your email"
+                                type={'email'}
                             />
                             <Button
                                 width={'100%'}

@@ -101,6 +101,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                                 name="email"
                                 label="Email"
                                 placeholder="Enter your email"
+                                type={'email'}
                             />
                             <Button
                                 width={'100%'}
