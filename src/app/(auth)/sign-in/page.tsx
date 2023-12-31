@@ -20,7 +20,7 @@ import React from 'react';
 import { FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignInMutation } from '@/graphql/mutations';
-import { AuthenticationError, SignInInput } from '@/graphql/types';
+import { SignInInput } from '@/graphql/types';
 
 import styles from './page.module.scss';
 
@@ -32,9 +32,7 @@ const initialValues: SignInInput = {
 };
 
 const SignIn: React.FC<SignInProps> = () => {
-    const [globalError, setGlobalError] = React.useState<
-        GraphQLFormattedError | AuthenticationError | null
-    >(null);
+    const [globalError, setGlobalError] = React.useState<GraphQLFormattedError | null>(null);
     const [, executeSignIn] = useSignInMutation();
     const router = useRouter();
 
@@ -59,13 +57,8 @@ const SignIn: React.FC<SignInProps> = () => {
             return;
         }
 
-        if (data?.signIn.user) {
+        if (data?.signIn) {
             router.push(Routes.HOME);
-            return;
-        }
-
-        if (data?.signIn.errors) {
-            setGlobalError(data.signIn.errors[0]);
             return;
         }
     };

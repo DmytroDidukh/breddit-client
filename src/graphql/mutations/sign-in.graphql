@@ -1,10 +1,5 @@
 mutation SignIn($user: SignInInput!) {
     signIn(user: $user) {
-        user {
-            ...RegularUser
-        }
-        errors {
-            message
-        }
+        ...RegularUser
     }
 }
