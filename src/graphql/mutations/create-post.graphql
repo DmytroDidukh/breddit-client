@@ -1,0 +1,11 @@
+mutation CreatePost($post: CreatePostInput!) {
+    createPost(post: $post) {
+        post {
+            ...PostBasic
+        }
+        errors {
+            message
+            field
+        }
+    }
+}

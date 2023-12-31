@@ -29,11 +29,7 @@ export const ChangePasswordDocument = gql`
                 message
             }
             user {
-                id
-                createdAt
-                updatedAt
-                username
-                email
+                ...UserBasic
             }
         }
     }

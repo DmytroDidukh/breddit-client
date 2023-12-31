@@ -19,11 +19,6 @@ export type Scalars = {
     DateTimeISO: { input: any; output: any };
 };
 
-export type AuthenticationError = {
-    __typename?: 'AuthenticationError';
-    message: Scalars['String']['output'];
-};
-
 export type ChangePasswordInput = {
     password: Scalars['String']['input'];
     token: Scalars['String']['input'];
@@ -35,6 +30,17 @@ export type ChangePasswordResult = {
     user?: Maybe<User>;
 };
 
+export type CreatePostInput = {
+    content: Scalars['String']['input'];
+    title: Scalars['String']['input'];
+};
+
+export type CreatePostResult = {
+    __typename?: 'CreatePostResult';
+    errors?: Maybe<Array<FieldError>>;
+    post?: Maybe<Post>;
+};
+
 export type FieldError = {
     __typename?: 'FieldError';
     field: Scalars['String']['output'];
@@ -44,14 +50,14 @@ export type FieldError = {
 export type Mutation = {
     __typename?: 'Mutation';
     changePassword: ChangePasswordResult;
-    createPost: Post;
+    createPost: CreatePostResult;
     deletePost: Scalars['Boolean']['output'];
     deleteUser: Scalars['Boolean']['output'];
     forgotPassword: Scalars['Boolean']['output'];
-    signIn: SignInResult;
+    signIn: User;
     signOut: Scalars['Boolean']['output'];
     signUp: SignUpResult;
-    updatePost?: Maybe<Post>;
+    updatePost: UpdatePostResult;
 };
 
 export type MutationChangePasswordArgs = {
@@ -59,7 +65,7 @@ export type MutationChangePasswordArgs = {
 };
 
 export type MutationCreatePostArgs = {
-    title: Scalars['String']['input'];
+    post: CreatePostInput;
 };
 
 export type MutationDeletePostArgs = {
@@ -84,13 +90,16 @@ export type MutationSignUpArgs = {
 
 export type MutationUpdatePostArgs = {
     id: Scalars['Int']['input'];
-    title: Scalars['String']['input'];
+    post: UpdatePostInput;
 };
 
 export type Post = {
     __typename?: 'Post';
+    author: User;
+    content: Scalars['String']['output'];
     createdAt: Scalars['DateTimeISO']['output'];
     id: Scalars['Int']['output'];
+    points: Scalars['Float']['output'];
     title: Scalars['String']['output'];
     updatedAt: Scalars['DateTimeISO']['output'];
 };
@@ -112,12 +121,6 @@ export type SignInInput = {
     username: Scalars['String']['input'];
 };
 
-export type SignInResult = {
-    __typename?: 'SignInResult';
-    errors?: Maybe<Array<AuthenticationError>>;
-    user?: Maybe<User>;
-};
-
 export type SignUpInput = {
     email: Scalars['String']['input'];
     password: Scalars['String']['input'];
@@ -128,6 +131,17 @@ export type SignUpResult = {
     __typename?: 'SignUpResult';
     errors?: Maybe<Array<FieldError>>;
     user?: Maybe<User>;
+};
+
+export type UpdatePostInput = {
+    content?: InputMaybe<Scalars['String']['input']>;
+    title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdatePostResult = {
+    __typename?: 'UpdatePostResult';
+    errors?: Maybe<Array<FieldError>>;
+    post?: Maybe<Post>;
 };
 
 export type User = {

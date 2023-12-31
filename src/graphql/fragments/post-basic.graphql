@@ -1,0 +1,8 @@
+fragment PostBasic on Post {
+    id
+    title
+    content
+    points
+    createdAt
+    updatedAt
+}

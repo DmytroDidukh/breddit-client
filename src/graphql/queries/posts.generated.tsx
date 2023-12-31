@@ -17,10 +17,7 @@ export type PostsQuery = {
 export const PostsDocument = gql`
     query Posts {
         posts {
-            id
-            createdAt
-            updatedAt
-            title
+            ...PostBasic
         }
     }
 `;

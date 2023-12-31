@@ -1,5 +1,5 @@
 mutation SignIn($user: SignInInput!) {
     signIn(user: $user) {
-        ...RegularUser
+        ...UserBasic
     }
 }

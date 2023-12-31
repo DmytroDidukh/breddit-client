@@ -1,6 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
-import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
+import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type MeQueryVariables = Types.Exact<{ [key: string]: never }>;
@@ -20,10 +20,10 @@ export type MeQuery = {
 export const MeDocument = gql`
     query Me {
         me {
-            ...RegularUser
+            ...UserBasic
         }
     }
-    ${RegularUserFragmentDoc}
+    ${UserBasicFragmentDoc}
 `;
 
 export function useMeQuery(options?: Omit<UseQueryArgs<MeQueryVariables>, 'query'>) {

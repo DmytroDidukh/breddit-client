@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@urql/next';
 
-import { RegularUserFragmentDoc } from '../fragments/regular-user.generated';
+import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type SignUpMutationVariables = Types.Exact<{
     user: Types.SignUpInput;
@@ -26,7 +26,7 @@ export const SignUpDocument = gql`
     mutation SignUp($user: SignUpInput!) {
         signUp(user: $user) {
             user {
-                ...RegularUser
+                ...UserBasic
             }
             errors {
                 field
@@ -34,7 +34,7 @@ export const SignUpDocument = gql`
             }
         }
     }
-    ${RegularUserFragmentDoc}
+    ${UserBasicFragmentDoc}
 `;
 
 export function useSignUpMutation() {

@@ -11,7 +11,7 @@ import styles from '@/app/(auth)/sign-in/page.module.scss';
 import { FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useChangePasswordMutation } from '@/graphql/mutations';
-import { AuthenticationError, ChangePasswordInput } from '@/graphql/types';
+import { ChangePasswordInput } from '@/graphql/types';
 
 interface ChangePasswordProps {
     params: {
@@ -29,9 +29,7 @@ const initialValues: ChangePasswordClientInput = {
 };
 
 const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
-    const [globalError, setGlobalError] = React.useState<
-        GraphQLFormattedError | AuthenticationError | null
-    >(null);
+    const [globalError, setGlobalError] = React.useState<GraphQLFormattedError | null>(null);
     const [, executeChangePassword] = useChangePasswordMutation();
     const router = useRouter();
 

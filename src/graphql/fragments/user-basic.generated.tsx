@@ -1,6 +1,6 @@
 import { gql } from '@urql/next';
 
-export type RegularUserFragment = {
+export type UserBasicFragment = {
     __typename?: 'User';
     id: number;
     username: string;
@@ -9,8 +9,8 @@ export type RegularUserFragment = {
     updatedAt: any;
 };
 
-export const RegularUserFragmentDoc = gql`
-    fragment RegularUser on User {
+export const UserBasicFragmentDoc = gql`
+    fragment UserBasic on User {
         id
         username
         email
