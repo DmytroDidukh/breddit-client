@@ -24,13 +24,13 @@ function getCacheExchange() {
                         { query: MeDocument },
                         _result,
                         (result, query) => {
-                            if (result.signIn.errors) {
-                                return query;
-                            } else {
+                            if (result.signIn) {
                                 return {
-                                    me: result.signIn.user,
+                                    me: result.signIn,
                                 };
                             }
+
+                            return query;
                         },
                     );
                 },

@@ -1,5 +1,7 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
+import { PostBasicFragmentDoc } from '../fragments/post-basic.generated';
+import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type PostsQueryVariables = Types.Exact<{ [key: string]: never }>;
 
@@ -8,9 +10,19 @@ export type PostsQuery = {
     posts: Array<{
         __typename?: 'Post';
         id: number;
+        title: string;
+        content: string;
+        points: number;
         createdAt: any;
         updatedAt: any;
-        title: string;
+        author: {
+            __typename?: 'User';
+            id: number;
+            username: string;
+            email: string;
+            createdAt: any;
+            updatedAt: any;
+        };
     }>;
 };
 
@@ -18,8 +30,13 @@ export const PostsDocument = gql`
     query Posts {
         posts {
             ...PostBasic
+            author {
+                ...UserBasic
+            }
         }
     }
+    ${PostBasicFragmentDoc}
+    ${UserBasicFragmentDoc}
 `;
 
 export function usePostsQuery(options?: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {

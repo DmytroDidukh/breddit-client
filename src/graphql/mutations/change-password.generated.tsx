@@ -1,5 +1,6 @@
 import { gql, useMutation } from '@urql/next';
 
+import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type ChangePasswordMutationVariables = Types.Exact<{
     options: Types.ChangePasswordInput;
@@ -13,10 +14,10 @@ export type ChangePasswordMutation = {
         user?: {
             __typename?: 'User';
             id: number;
-            createdAt: any;
-            updatedAt: any;
             username: string;
             email: string;
+            createdAt: any;
+            updatedAt: any;
         } | null;
     };
 };
@@ -33,6 +34,7 @@ export const ChangePasswordDocument = gql`
             }
         }
     }
+    ${UserBasicFragmentDoc}
 `;
 
 export function useChangePasswordMutation() {
