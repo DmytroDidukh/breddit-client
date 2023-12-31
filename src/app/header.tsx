@@ -39,6 +39,8 @@ function Header() {
             p={'0 20px'}
             borderBottomWidth={'1px'}
             borderColor="gray.700"
+            position={'sticky'}
+            top={0}
         >
             {/* TODO: Fix color mode colors for text */}
             <Heading>Breddit</Heading>

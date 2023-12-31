@@ -6,6 +6,7 @@ import React, { Suspense } from 'react';
 
 import { createUrqlClient } from '@/lib';
 
+import { AuthProvider } from './auth-provider';
 import Header from './header';
 import { ThemeProvider } from './theme-provider';
 
@@ -15,10 +16,12 @@ function Layout({ children, cookies }: { children: React.ReactNode; cookies: Req
     return (
         <UrqlProvider client={client} ssr={ssr}>
             <ThemeProvider>
-                <Suspense>
-                    <Header />
-                </Suspense>
-                {children}
+                <AuthProvider>
+                    <Suspense>
+                        <Header />
+                    </Suspense>
+                    {children}
+                </AuthProvider>
             </ThemeProvider>
         </UrqlProvider>
     );
