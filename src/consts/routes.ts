@@ -4,4 +4,5 @@ export enum Routes {
     SIGN_UP = '/sign-up',
     FORGOT_PASSWORD = '/forgot-password',
     CHANGE_PASSWORD = '/change-password/:token',
+    CREATE_POST = '/create-post',
 }
