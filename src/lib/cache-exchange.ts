@@ -14,7 +14,7 @@ function betterUpdateQuery<Result, Query>(
     return cache.updateQuery(query, (data) => fn(result, data as any) as any);
 }
 
-function getCacheExchange() {
+function createCacheExchange() {
     return cacheExchange({
         updates: {
             Mutation: {
@@ -79,4 +79,4 @@ function getCacheExchange() {
     });
 }
 
-export { getCacheExchange };
+export { createCacheExchange };
