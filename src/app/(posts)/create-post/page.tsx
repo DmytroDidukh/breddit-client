@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, AlertIcon, AlertTitle, Box, Button, Heading } from '@chakra-ui/react';
+import { Alert, AlertIcon, AlertTitle, Box, Button, Flex, Heading } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
@@ -86,16 +86,25 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                                 placeholder="What is post about?"
                                 height={'500px'}
                             />
-                            <Button
-                                width={'300px'}
-                                mt={4}
-                                ml={'auto'}
-                                colorScheme="teal"
-                                isLoading={isSubmitting}
-                                type="submit"
-                            >
-                                Create
-                            </Button>
+                            <Flex justifyContent={'flex-end'} gap={'12px'}>
+                                <Button
+                                    colorScheme="gray"
+                                    variant={'outline'}
+                                    onClick={() => router.back()}
+                                    type="submit"
+                                >
+                                    Back
+                                </Button>
+                                <Button
+                                    width={'200px'}
+                                    colorScheme="teal"
+                                    isLoading={isSubmitting}
+                                    type="submit"
+                                >
+                                    Create
+                                </Button>
+                            </Flex>
+
                             {globalError && (
                                 <Alert status="error" borderRadius={8}>
                                     <AlertIcon />
