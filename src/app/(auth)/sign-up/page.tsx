@@ -1,16 +1,6 @@
 'use client';
 
-import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    Button,
-    Link as ChakraLink,
-    Heading,
-    Text,
-} from '@chakra-ui/react';
+import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
@@ -18,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { FormField, Page } from '@/components';
+import { ErrorAlert, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignUpMutation } from '@/graphql/mutations';
 import { SignUpInput } from '@/graphql/types';
@@ -112,24 +102,7 @@ const SignUp: React.FC<SignUpProps> = () => {
                             >
                                 Sign up
                             </Button>
-                            {globalError && (
-                                <Alert
-                                    status="error"
-                                    borderRadius={8}
-                                    flexDirection={'column'}
-                                    alignItems={'start'}
-                                >
-                                    <Box display={'inline-flex'} alignItems={'center'}>
-                                        <AlertIcon />
-                                        <AlertTitle as={'span'}>
-                                            Something unexpected happen.
-                                        </AlertTitle>
-                                    </Box>
-                                    <AlertDescription as={'span'} paddingLeft={'33px'}>
-                                        {globalError.message}
-                                    </AlertDescription>
-                                </Alert>
-                            )}
+                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>

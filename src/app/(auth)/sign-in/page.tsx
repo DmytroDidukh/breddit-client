@@ -1,15 +1,6 @@
 'use client';
 
-import {
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    Button,
-    Link as ChakraLink,
-    Heading,
-    Text,
-} from '@chakra-ui/react';
+import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
@@ -17,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { FormField, Page } from '@/components';
+import { ErrorAlert, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignInMutation } from '@/graphql/mutations';
 import { SignInInput } from '@/graphql/types';
@@ -100,12 +91,7 @@ const SignIn: React.FC<SignInProps> = () => {
                             >
                                 Sign in
                             </Button>
-                            {globalError && (
-                                <Alert status="error" borderRadius={8}>
-                                    <AlertIcon />
-                                    <AlertTitle as={'span'}>{globalError.message}</AlertTitle>
-                                </Alert>
-                            )}
+                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>

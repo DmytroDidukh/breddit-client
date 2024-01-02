@@ -1,6 +1,6 @@
 'use client';
 
-import { Alert, AlertIcon, AlertTitle, Box, Button, Heading } from '@chakra-ui/react';
+import { Box, Button, Heading } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import styles from '@/app/(auth)/sign-in/page.module.scss';
-import { FormField, Page } from '@/components';
+import { ErrorAlert, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useChangePasswordMutation } from '@/graphql/mutations';
 import { ChangePasswordInput } from '@/graphql/types';
@@ -115,12 +115,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
                             >
                                 Change Password
                             </Button>
-                            {globalError && (
-                                <Alert status="error" borderRadius={8}>
-                                    <AlertIcon />
-                                    <AlertTitle as={'span'}>{globalError.message}</AlertTitle>
-                                </Alert>
-                            )}
+                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>

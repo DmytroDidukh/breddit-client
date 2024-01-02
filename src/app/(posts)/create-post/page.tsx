@@ -1,13 +1,13 @@
 'use client';
 
-import { Alert, AlertIcon, AlertTitle, Box, Button, Flex, Heading } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { FormField, FormTextarea, Page } from '@/components';
+import { ErrorAlert, FormField, FormTextarea, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useCreatePostMutation } from '@/graphql/mutations';
 import { CreatePostInput } from '@/graphql/types';
@@ -104,13 +104,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                                     Create
                                 </Button>
                             </Flex>
-
-                            {globalError && (
-                                <Alert status="error" borderRadius={8}>
-                                    <AlertIcon />
-                                    <AlertTitle as={'span'}>{globalError.message}</AlertTitle>
-                                </Alert>
-                            )}
+                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>
