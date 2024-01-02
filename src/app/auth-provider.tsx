@@ -23,19 +23,14 @@ const defaultAuthContext: AuthContextType = {
 export const AuthContext = React.createContext<AuthContextType>(defaultAuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [user, setUser] = React.useState<User | null>(null);
     const [{ data, fetching, error }] = useMeQuery();
     const router = useRouter();
 
     React.useEffect(() => {
-        if (!fetching) {
-            if (error) {
-                router.push(Routes.SIGN_IN);
-            } else if (data?.me) {
-                setUser(data.me);
-            }
+        if (!fetching && error) {
+            router.push(Routes.SIGN_IN);
         }
-    }, [data, fetching, error, router]);
+    }, [fetching, error, router]);
 
     if (fetching) {
         return (
@@ -45,8 +40,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
     }
 
+    console.log('data', data);
+
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user, fetching }}>
+        <AuthContext.Provider
+            value={{ user: data?.me || null, isAuthenticated: !!data?.me, fetching }}
+        >
             {children}
         </AuthContext.Provider>
     );
