@@ -1,26 +1,18 @@
-import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
+import { cacheExchange } from '@urql/exchange-graphcache';
 
 import { ChangePasswordMutation, CreatePostMutation, SignUpMutation } from '@/graphql/mutations';
 import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
 import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { PostsDocument, PostsQuery } from '@/graphql/queries';
 import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
-
-function betterUpdateQuery<Result, Query>(
-    cache: Cache,
-    query: QueryInput,
-    result: any,
-    fn: (r: Result, q: Query) => Query,
-) {
-    return cache.updateQuery(query, (data) => fn(result, data as any) as any);
-}
+import { cacheQueryUpdater } from '@/utils';
 
 function createCacheExchange() {
     return cacheExchange({
         updates: {
             Mutation: {
                 signIn: (_result: SignInMutation, _, _cache) => {
-                    betterUpdateQuery<SignInMutation, MeQuery>(
+                    cacheQueryUpdater<SignInMutation, MeQuery>(
                         _cache,
                         { query: MeDocument },
                         _result,
@@ -36,7 +28,7 @@ function createCacheExchange() {
                     );
                 },
                 signUp: (_result: SignUpMutation, _, _cache) => {
-                    betterUpdateQuery<SignUpMutation, MeQuery>(
+                    cacheQueryUpdater<SignUpMutation, MeQuery>(
                         _cache,
                         { query: MeDocument },
                         _result,
@@ -52,7 +44,7 @@ function createCacheExchange() {
                     );
                 },
                 signOut: (_result: SignOutMutation, _, _cache) => {
-                    betterUpdateQuery<SignOutMutation, MeQuery>(
+                    cacheQueryUpdater<SignOutMutation, MeQuery>(
                         _cache,
                         { query: MeDocument },
                         _result,
@@ -60,7 +52,7 @@ function createCacheExchange() {
                     );
                 },
                 changePassword: (_result: ChangePasswordMutation, _, _cache) => {
-                    betterUpdateQuery<ChangePasswordMutation, MeQuery>(
+                    cacheQueryUpdater<ChangePasswordMutation, MeQuery>(
                         _cache,
                         { query: MeDocument },
                         _result,
@@ -76,8 +68,7 @@ function createCacheExchange() {
                     );
                 },
                 createPost: (_result: CreatePostMutation, _, _cache) => {
-                    // _cache.invalidate('Posts', 'posts',
-                    betterUpdateQuery<CreatePostMutation, PostsQuery>(
+                    cacheQueryUpdater<CreatePostMutation, PostsQuery>(
                         _cache,
                         { query: PostsDocument },
                         _result,
