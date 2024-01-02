@@ -85,12 +85,15 @@ function createCacheExchange() {
                             if (result.createPost.errors) {
                                 return query;
                             } else {
-                                console.log('createPost');
-                                console.log(result.createPost.post);
-                                console.log([...query.posts, result.createPost.post]);
-                                return {
-                                    posts: [...query.posts, result.createPost.post],
-                                };
+                                const newPost = result.createPost.post;
+                                if (newPost) {
+                                    return {
+                                        __typename: 'Query',
+                                        posts: [newPost, ...query.posts],
+                                    };
+                                }
+
+                                return query;
                             }
                         },
                     );
