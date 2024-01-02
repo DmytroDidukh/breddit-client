@@ -3,7 +3,7 @@
 // import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { PlusSquareIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -43,10 +43,10 @@ function Header() {
             position={'sticky'}
             top={0}
         >
-            <NextLink href={Routes.HOME}>
+            <Link href={Routes.HOME}>
                 {/* TODO: Fix color mode colors for text */}
                 <Heading>Breddit</Heading>
-            </NextLink>
+            </Link>
             {/* TODO: Disabled due it requires setting up all used components */}
             {/* <IconButton */}
             {/*   aria-label="Color mode" */}

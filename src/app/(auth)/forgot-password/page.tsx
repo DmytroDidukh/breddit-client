@@ -1,21 +1,12 @@
 'use client';
 
-import { InfoIcon } from '@chakra-ui/icons';
-import {
-    Alert,
-    AlertTitle,
-    Box,
-    Button,
-    Link as ChakraLink,
-    Heading,
-    Text,
-} from '@chakra-ui/react';
+import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
 import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import Link from 'next/link';
 import React from 'react';
 
-import { FormField, Page } from '@/components';
+import { FormField, InfoAlert, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useForgotPasswordMutation } from '@/graphql/mutations';
 
@@ -84,14 +75,10 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
                             >
                                 Send
                             </Button>
-                            {showHint && (
-                                <Alert status="info" borderRadius={8}>
-                                    <InfoIcon />
-                                    <AlertTitle as={'span'}>
-                                        Email with the instructions sent.
-                                    </AlertTitle>
-                                </Alert>
-                            )}
+                            <InfoAlert
+                                message={'Email with the instructions sent.'}
+                                show={showHint}
+                            />
                         </Form>
                     )}
                 </Formik>
