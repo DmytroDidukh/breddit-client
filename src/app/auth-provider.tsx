@@ -40,8 +40,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
     }
 
-    console.log('data', data);
-
     return (
         <AuthContext.Provider
             value={{ user: data?.me || null, isAuthenticated: !!data?.me, fetching }}

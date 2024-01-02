@@ -2,6 +2,9 @@ mutation CreatePost($post: CreatePostInput!) {
     createPost(post: $post) {
         post {
             ...PostBasic
+            author {
+                ...UserBasic
+            }
         }
         errors {
             message
