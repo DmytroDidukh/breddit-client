@@ -11,11 +11,16 @@ import { User } from '@/graphql/types';
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
+    fetching: boolean;
 }
 
-const AuthContext = React.createContext<AuthContextType | null>(null);
+const defaultAuthContext: AuthContextType = {
+    user: null,
+    isAuthenticated: false,
+    fetching: true,
+};
 
-export const useAuth = () => React.useContext(AuthContext);
+export const AuthContext = React.createContext<AuthContextType>(defaultAuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = React.useState<User | null>(null);
@@ -41,7 +46,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, isAuthenticated: !!user }}>
+        <AuthContext.Provider value={{ user, isAuthenticated: !!user, fetching }}>
             {children}
         </AuthContext.Provider>
     );

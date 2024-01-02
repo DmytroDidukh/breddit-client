@@ -8,13 +8,13 @@ import React from 'react';
 
 import { Routes } from '@/consts';
 import { useSignOutMutation } from '@/graphql/mutations';
-import { useMeQuery } from '@/graphql/queries';
+import { useAuth } from '@/hooks';
 
 function Header() {
     const [signOutResult, executeSignOut] = useSignOutMutation();
-    const [meResult] = useMeQuery();
     const router = useRouter();
     const pathname = usePathname();
+    const { user, isAuthenticated, fetching } = useAuth();
     // const { colorMode, toggleColorMode } = useColorMode();
 
     const redirectToSignIn = () => {
@@ -51,9 +51,9 @@ function Header() {
             {/*   icon={colorMode === 'dark' ? <SunIcon /> : <MoonIcon />} */}
             {/*   onClick={toggleColorMode} */}
             {/* /> */}
-            {!meResult.fetching && (
+            {!fetching && (
                 <>
-                    {meResult.data?.me && (
+                    {user && (
                         <Flex gap={'24px'}>
                             {pathname !== Routes.SIGN_IN && pathname !== Routes.CREATE_POST && (
                                 <Button
@@ -68,7 +68,7 @@ function Header() {
                             )}
 
                             <Flex alignItems={'center'} gap={'12px'}>
-                                <Text as={'b'}>{meResult.data.me.username}</Text>
+                                <Text as={'b'}>{user.username}</Text>
                                 <Button
                                     size={'sm'}
                                     width={'80px'}
@@ -82,7 +82,7 @@ function Header() {
                             </Flex>
                         </Flex>
                     )}
-                    {!meResult.data?.me && (
+                    {!isAuthenticated && pathname !== Routes.SIGN_IN && (
                         <Button
                             size={'sm'}
                             width={'80px'}
