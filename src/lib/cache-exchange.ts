@@ -1,8 +1,9 @@
 import { Cache, cacheExchange, QueryInput } from '@urql/exchange-graphcache';
 
-import { ChangePasswordMutation, SignUpMutation } from '@/graphql/mutations';
+import { ChangePasswordMutation, CreatePostMutation, SignUpMutation } from '@/graphql/mutations';
 import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
 import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
+import { PostsDocument, PostsQuery } from '@/graphql/queries';
 import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
 
 function betterUpdateQuery<Result, Query>(
@@ -69,6 +70,26 @@ function createCacheExchange() {
                             } else {
                                 return {
                                     me: result.changePassword.user,
+                                };
+                            }
+                        },
+                    );
+                },
+                createPost: (_result: CreatePostMutation, _, _cache) => {
+                    // _cache.invalidate('Posts', 'posts',
+                    betterUpdateQuery<CreatePostMutation, PostsQuery>(
+                        _cache,
+                        { query: PostsDocument },
+                        _result,
+                        (result, query) => {
+                            if (result.createPost.errors) {
+                                return query;
+                            } else {
+                                console.log('createPost');
+                                console.log(result.createPost.post);
+                                console.log([...query.posts, result.createPost.post]);
+                                return {
+                                    posts: [...query.posts, result.createPost.post],
                                 };
                             }
                         },
