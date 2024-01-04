@@ -1,16 +1,14 @@
 'use client';
 
-import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
-import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
+import { Box, Link as ChakraLink, Flex, Heading, Text } from '@chakra-ui/react';
+import { Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import Link from 'next/link';
 import React from 'react';
 
-import { FormField, InfoAlert, Page } from '@/components';
+import { Form, FormField, InfoAlert, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useForgotPasswordMutation } from '@/graphql/mutations';
-
-import styles from './page.module.scss';
 
 interface ForgotPasswordProps {}
 
@@ -48,38 +46,35 @@ const ForgotPassword: React.FC<ForgotPasswordProps> = () => {
             <Box
                 display={'flex'}
                 justifyContent={'center'}
-                alignItems={'stretch'}
+                alignItems={'center'}
                 flexDirection={'column'}
                 width={'500px'}
-                height={'100%'}
                 margin={'0 auto'}
+                flex={'1'}
             >
                 <Heading textAlign={'center'}>Reset Password</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<ForgotPasswordInput> & FormikHandlers) => (
-                        // TODO: Move this to a separate shared component
-                        <Form className={styles.form}>
-                            <FormField
-                                id={'email'}
-                                name="email"
-                                label="Email"
-                                placeholder="Enter your email"
-                                type={'email'}
-                            />
-                            <Button
-                                width={'100%'}
-                                mt={4}
-                                colorScheme="teal"
-                                isLoading={isSubmitting}
-                                type="submit"
+                    {(formState: FormikState<ForgotPasswordInput> & FormikHandlers) => (
+                        <Flex flexDirection={'column'} gap={'12px'} width={'100%'}>
+                            <Form
+                                formState={formState}
+                                error={null}
+                                submitLabel={'Send'}
+                                showCancelAction={false}
                             >
-                                Send
-                            </Button>
+                                <FormField
+                                    id={'email'}
+                                    name="email"
+                                    label="Email"
+                                    placeholder="Enter your email"
+                                    type={'email'}
+                                />
+                            </Form>
                             <InfoAlert
                                 message={'Email with the instructions sent.'}
                                 show={showHint}
                             />
-                        </Form>
+                        </Flex>
                     )}
                 </Formik>
                 <Text textAlign={'center'} mt={'10px'}>

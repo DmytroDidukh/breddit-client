@@ -1,14 +1,13 @@
 'use client';
 
-import { Box, Button, Heading } from '@chakra-ui/react';
-import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
+import { Box } from '@chakra-ui/react';
+import { Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import styles from '@/app/(auth)/sign-in/page.module.scss';
-import { ErrorAlert, FormField, Page } from '@/components';
+import { Form, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useChangePasswordMutation } from '@/graphql/mutations';
 import { ChangePasswordInput } from '@/graphql/types';
@@ -80,18 +79,20 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
             <Box
                 display={'flex'}
                 justifyContent={'center'}
-                alignItems={'stretch'}
+                alignItems={'center'}
                 flexDirection={'column'}
                 width={'500px'}
-                height={'100%'}
                 margin={'0 auto'}
+                flex={'1'}
             >
-                <Heading textAlign={'center'}>Sign In to Your Account</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({
-                        isSubmitting,
-                    }: FormikState<ChangePasswordClientInput> & FormikHandlers) => (
-                        <Form className={styles.form}>
+                    {(formState: FormikState<ChangePasswordClientInput> & FormikHandlers) => (
+                        <Form
+                            formState={formState}
+                            error={globalError}
+                            submitLabel={'Change Password'}
+                            showCancelAction={false}
+                        >
                             <FormField
                                 id={'password'}
                                 name="password"
@@ -106,16 +107,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = ({ params }) => {
                                 placeholder="Confirm new password"
                                 type={'password'}
                             />
-                            <Button
-                                width={'100%'}
-                                mt={4}
-                                colorScheme="teal"
-                                isLoading={isSubmitting}
-                                type="submit"
-                            >
-                                Change Password
-                            </Button>
-                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>

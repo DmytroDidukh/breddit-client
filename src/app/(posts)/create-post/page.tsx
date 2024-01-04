@@ -91,7 +91,6 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                                     colorScheme="gray"
                                     variant={'outline'}
                                     onClick={() => router.back()}
-                                    type="submit"
                                 >
                                     Back
                                 </Button>

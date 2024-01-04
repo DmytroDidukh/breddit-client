@@ -12,10 +12,12 @@ const Page: React.FC<PageProps> = ({ variant = 'regular', children }) => {
             <Box
                 as={'main'}
                 p={'50px'}
-                mx={'auto'}
+                margin={'auto'}
                 width={'100%'}
-                height={'calc(100vh - 60px)'}
+                minHeight={'calc(100% - 60px)'}
                 maxW={variant === 'regular' ? '1200px' : '400px'}
+                display={'flex'}
+                flexDirection={'column'}
                 borderLeftWidth="1px"
                 borderRightWidth="1px"
                 borderColor="gray.700"

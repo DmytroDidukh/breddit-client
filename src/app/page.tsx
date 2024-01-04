@@ -11,7 +11,7 @@ function Home() {
     return (
         <Page>
             <Heading>Posts</Heading>
-            <Flex flexDirection={'column'} gap={24}>
+            <Flex flexDirection={'column'} gap={24} flex={'1'}>
                 {postsResult.data?.posts.map((post) => (
                     <div key={post.id}>
                         <h2>{post.title}</h2>

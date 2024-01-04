@@ -1,20 +1,18 @@
 'use client';
 
-import { Box, Button, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
-import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
+import { Box, Link as ChakraLink, Heading, Text } from '@chakra-ui/react';
+import { Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { ErrorAlert, FormField, Page } from '@/components';
+import { Form, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignUpMutation } from '@/graphql/mutations';
 import { SignUpInput } from '@/graphql/types';
 import { Mapper } from '@/utils';
-
-import styles from './page.module.scss';
 
 interface SignUpProps {}
 
@@ -63,16 +61,21 @@ const SignUp: React.FC<SignUpProps> = () => {
             <Box
                 display={'flex'}
                 justifyContent={'center'}
-                alignItems={'stretch'}
+                alignItems={'center'}
                 flexDirection={'column'}
                 width={'500px'}
-                height={'100%'}
                 margin={'0 auto'}
+                flex={'1'}
             >
                 <Heading textAlign={'center'}>Create Your Account</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<SignUpInput> & FormikHandlers) => (
-                        <Form className={styles.form}>
+                    {(formState: FormikState<SignUpInput> & FormikHandlers) => (
+                        <Form
+                            formState={formState}
+                            error={globalError}
+                            submitLabel={'Sign Up'}
+                            showCancelAction={false}
+                        >
                             <FormField
                                 id={'username'}
                                 name="username"
@@ -93,16 +96,6 @@ const SignUp: React.FC<SignUpProps> = () => {
                                 placeholder="Enter your email"
                                 type={'email'}
                             />
-                            <Button
-                                width={'100%'}
-                                mt={4}
-                                colorScheme="teal"
-                                isLoading={isSubmitting}
-                                type="submit"
-                            >
-                                Sign up
-                            </Button>
-                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>

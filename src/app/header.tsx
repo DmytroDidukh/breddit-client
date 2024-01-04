@@ -40,8 +40,10 @@ function Header() {
             p={'0 20px'}
             borderBottomWidth={'1px'}
             borderColor="gray.700"
+            backgroundColor={'#121212'}
             position={'sticky'}
             top={0}
+            as={'header'}
         >
             <Link href={Routes.HOME}>
                 {/* TODO: Fix color mode colors for text */}

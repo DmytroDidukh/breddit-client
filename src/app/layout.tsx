@@ -4,6 +4,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 
 import Layout from './_layout';
+import './global.css';
 
 export const metadata: Metadata = {
     title: 'Breddit',

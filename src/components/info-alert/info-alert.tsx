@@ -12,7 +12,7 @@ const InfoAlert: React.FC<ErrorAlertProps> = ({ message, show }) => {
 
     return (
         <Alert status="info" borderRadius={8}>
-            <InfoIcon />
+            <InfoIcon marginRight={'8px'} />
             <AlertTitle as={'span'}>{message}</AlertTitle>
         </Alert>
     );
