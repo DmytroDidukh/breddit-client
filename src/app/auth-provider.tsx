@@ -1,12 +1,12 @@
 'use client';
 
-import { Flex, Heading } from '@chakra-ui/react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Routes } from '@/consts';
 import { useMeQuery } from '@/graphql/queries';
 import { User } from '@/graphql/types';
+import { isPublicRoute } from '@/utils';
 
 interface AuthContextType {
     user: User | null;
@@ -25,19 +25,16 @@ export const AuthContext = React.createContext<AuthContextType>(defaultAuthConte
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [{ data, fetching, error }] = useMeQuery();
     const router = useRouter();
+    const pathname = usePathname();
 
     React.useEffect(() => {
-        if (!fetching && error) {
+        if (!fetching && error && !isPublicRoute(pathname)) {
             router.push(Routes.SIGN_IN);
         }
-    }, [fetching, error, router]);
+    }, [fetching, error, router, pathname]);
 
     if (fetching) {
-        return (
-            <Flex width={'100vw'} height={'100vh'} justifyContent={'center'} alignItems={'center'}>
-                <Heading size={'lg'}>Loading...</Heading>
-            </Flex>
-        );
+        return null;
     }
 
     return (
