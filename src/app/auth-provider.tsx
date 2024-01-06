@@ -23,29 +23,36 @@ const defaultAuthContext: AuthContextType = {
 export const AuthContext = React.createContext<AuthContextType>(defaultAuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [{ data, fetching, error }] = useMeQuery();
+    const [{ data, fetching }] = useMeQuery();
     const router = useRouter();
     const pathname = usePathname();
+    const isAuthenticated = !!data?.me;
 
     React.useEffect(() => {
         if (!checkRouteMatch(pathname)) {
-            return; // Means that route is not matched, auto redirect to not found page
-        } else if (!fetching && error && !isPublicRoute(pathname)) {
+            // Auto-redirect to not found page
+            return;
+        }
+
+        if (!fetching && !isAuthenticated && !isPublicRoute(pathname)) {
             router.push(`${Routes.SIGN_IN}?returnTo=${pathname}`);
-        } else if (data?.me && isPublicRoute(pathname)) {
+        } else if (isAuthenticated && isPublicRoute(pathname)) {
             router.push(Routes.HOME);
         }
-    }, [fetching, error, router, pathname, data?.me]);
+    }, [fetching, isAuthenticated, router, pathname]);
+
+    const authContextValue = React.useMemo(
+        () => ({
+            user: data?.me || null,
+            isAuthenticated,
+            fetching,
+        }),
+        [data?.me, fetching],
+    );
 
     if (fetching) {
         return null;
     }
 
-    return (
-        <AuthContext.Provider
-            value={{ user: data?.me || null, isAuthenticated: !!data?.me, fetching }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;
 }
