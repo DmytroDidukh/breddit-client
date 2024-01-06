@@ -12,15 +12,18 @@ import { Form, FormField, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useSignInMutation } from '@/graphql/mutations';
 import { SignInInput } from '@/graphql/types';
+import { SearchParams } from '@/types';
 
-interface SignInProps {}
+interface SignInProps {
+    searchParams: SearchParams;
+}
 
 const initialValues: SignInInput = {
     username: '',
     password: '',
 };
 
-const SignIn: React.FC<SignInProps> = () => {
+const SignIn: React.FC<SignInProps> = ({ searchParams }) => {
     const [globalError, setGlobalError] = React.useState<GraphQLFormattedError | null>(null);
     const [, executeSignIn] = useSignInMutation();
     const router = useRouter();
@@ -47,7 +50,8 @@ const SignIn: React.FC<SignInProps> = () => {
         }
 
         if (data?.signIn) {
-            router.push(Routes.HOME);
+            const { returnTo } = searchParams;
+            router.push(returnTo || Routes.HOME);
             return;
         }
     };
