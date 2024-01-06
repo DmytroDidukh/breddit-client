@@ -30,8 +30,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     React.useEffect(() => {
         if (!fetching && error && !isPublicRoute(pathname)) {
             router.push(`${Routes.SIGN_IN}?returnTo=${pathname}`);
+        } else if (data?.me && isPublicRoute(pathname)) {
+            router.push(Routes.HOME);
+            return;
         }
-    }, [fetching, error, router, pathname]);
+    }, [fetching, error, router, pathname, data?.me]);
 
     if (fetching) {
         return null;
