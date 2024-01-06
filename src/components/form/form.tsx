@@ -25,8 +25,8 @@ interface FormProps<T> {
 const Form = <T,>({
     error,
     formState,
-    submitLabel,
-    cancelLabel,
+    submitLabel = 'Submit',
+    cancelLabel = 'Cancel',
     submitBtnWidth = '100%',
     showCancelAction = true,
     actionsAlignment = 'center',

@@ -1,19 +1,17 @@
 'use client';
 
-import { Box, Button, Flex, Heading } from '@chakra-ui/react';
-import { Form, Formik, FormikErrors, FormikHandlers } from 'formik';
+import { Box, Heading } from '@chakra-ui/react';
+import { Formik, FormikErrors, FormikHandlers } from 'formik';
 import { FormikHelpers, FormikState } from 'formik/dist/types';
 import { GraphQLFormattedError } from 'graphql/error';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { ErrorAlert, FormField, FormTextarea, Page } from '@/components';
+import { Form, FormField, FormTextarea, Page } from '@/components';
 import { Routes } from '@/consts';
 import { useCreatePostMutation } from '@/graphql/mutations';
 import { CreatePostInput } from '@/graphql/types';
 import { Mapper } from '@/utils';
-
-import styles from './page.module.scss';
 
 interface CreatePostProps {}
 
@@ -67,12 +65,20 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                 flexDirection={'column'}
                 width={'80%'}
                 height={'100%'}
+                flex={'1'}
                 margin={'0 auto'}
             >
                 <Heading textAlign={'center'}>New Post:</Heading>
                 <Formik initialValues={initialValues} validate={validate} onSubmit={handleSubmit}>
-                    {({ isSubmitting }: FormikState<CreatePostInput> & FormikHandlers) => (
-                        <Form className={styles.form}>
+                    {(formState: FormikState<CreatePostInput> & FormikHandlers) => (
+                        <Form
+                            formState={formState}
+                            error={globalError}
+                            submitLabel={'Create'}
+                            cancelLabel={'Back'}
+                            submitBtnWidth={'200px'}
+                            actionsAlignment={'flex-end'}
+                        >
                             <FormField
                                 id={'title'}
                                 name="title"
@@ -86,24 +92,6 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                                 placeholder="What is post about?"
                                 height={'500px'}
                             />
-                            <Flex justifyContent={'flex-end'} gap={'12px'}>
-                                <Button
-                                    colorScheme="gray"
-                                    variant={'outline'}
-                                    onClick={() => router.back()}
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    width={'200px'}
-                                    colorScheme="teal"
-                                    isLoading={isSubmitting}
-                                    type="submit"
-                                >
-                                    Create
-                                </Button>
-                            </Flex>
-                            <ErrorAlert error={globalError} />
                         </Form>
                     )}
                 </Formik>
