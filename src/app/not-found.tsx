@@ -10,6 +10,7 @@ import { Routes } from '@/consts';
 // TODO: Fix not found handling. Context: My AuthProvider is not working properly.
 //  MeQuery breaks everything. Consider authExchange in urql use instead of AuthProvider.
 const NotFound: React.FC = () => {
+    console.log('NOT FOUND');
     return (
         <Page>
             <Flex

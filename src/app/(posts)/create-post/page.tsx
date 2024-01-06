@@ -78,6 +78,7 @@ const CreatePost: React.FC<CreatePostProps> = () => {
                             cancelLabel={'Back'}
                             submitBtnWidth={'200px'}
                             actionsAlignment={'flex-end'}
+                            onCancel={() => router.back()}
                         >
                             <FormField
                                 id={'title'}

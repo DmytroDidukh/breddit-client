@@ -16,12 +16,12 @@ function Layout({ children, cookies }: { children: React.ReactNode; cookies: Req
     return (
         <UrqlProvider client={client} ssr={ssr}>
             <ThemeProvider>
-                <AuthProvider>
-                    <Suspense>
+                <Suspense>
+                    <AuthProvider>
                         <Header />
-                    </Suspense>
-                    {children}
-                </AuthProvider>
+                        {children}
+                    </AuthProvider>
+                </Suspense>
             </ThemeProvider>
         </UrqlProvider>
     );

@@ -6,7 +6,7 @@ import React from 'react';
 import { Routes } from '@/consts';
 import { useMeQuery } from '@/graphql/queries';
 import { User } from '@/graphql/types';
-import { isPublicRoute } from '@/utils';
+import { checkRouteMatch, isPublicRoute } from '@/utils';
 
 interface AuthContextType {
     user: User | null;
@@ -28,11 +28,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
     React.useEffect(() => {
-        if (!fetching && error && !isPublicRoute(pathname)) {
+        if (!checkRouteMatch(pathname)) {
+            return; // Means that route is not matched, auto redirect to not found page
+        } else if (!fetching && error && !isPublicRoute(pathname)) {
             router.push(`${Routes.SIGN_IN}?returnTo=${pathname}`);
         } else if (data?.me && isPublicRoute(pathname)) {
             router.push(Routes.HOME);
-            return;
         }
     }, [fetching, error, router, pathname, data?.me]);
 
