@@ -1,6 +1,6 @@
 query Posts($cursor: DateTimeISO, $limit: Int) {
     posts(cursor: $cursor, limit: $limit) {
-        ...PostBasic
+        ...PostBasicSnippet
         author {
             ...UserBasic
         }

@@ -1,6 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
-import { PostBasicFragmentDoc } from '../fragments/post-basic.generated';
+import { PostBasicSnippetFragmentDoc } from '../fragments/post-basic.generated';
 import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 
@@ -15,7 +15,7 @@ export type PostsQuery = {
         __typename?: 'Post';
         id: number;
         title: string;
-        content: string;
+        contentSnippet: string;
         points: number;
         createdAt: any;
         updatedAt: any;
@@ -33,13 +33,13 @@ export type PostsQuery = {
 export const PostsDocument = gql`
     query Posts($cursor: DateTimeISO, $limit: Int) {
         posts(cursor: $cursor, limit: $limit) {
-            ...PostBasic
+            ...PostBasicSnippet
             author {
                 ...UserBasic
             }
         }
     }
-    ${PostBasicFragmentDoc}
+    ${PostBasicSnippetFragmentDoc}
     ${UserBasicFragmentDoc}
 `;
 

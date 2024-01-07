@@ -97,6 +97,7 @@ export type Post = {
     __typename?: 'Post';
     author: User;
     content: Scalars['String']['output'];
+    contentSnippet: Scalars['String']['output'];
     createdAt: Scalars['DateTimeISO']['output'];
     id: Scalars['Int']['output'];
     points: Scalars['Float']['output'];

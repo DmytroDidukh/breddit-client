@@ -6,3 +6,12 @@ fragment PostBasic on Post {
     createdAt
     updatedAt
 }
+
+fragment PostBasicSnippet on Post {
+    id
+    title
+    contentSnippet
+    points
+    createdAt
+    updatedAt
+}
