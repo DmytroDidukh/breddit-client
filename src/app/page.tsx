@@ -1,25 +1,55 @@
 'use client';
 
-import { Flex, Heading } from '@chakra-ui/react';
+import { Box, Button, Link as ChakraLink, Heading, Stack, Text } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import { Page } from '@/components';
 import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
-    const [postsResult] = usePostsQuery();
+    const [{ data, fetching }] = usePostsQuery();
+
+    const handleLoadMore = () => {
+        console.log('load more');
+    };
 
     return (
         <Page>
-            <Heading>Posts</Heading>
-            <Flex flexDirection={'column'} gap={24} flex={'1'}>
-                {postsResult.data?.posts.map((post) => (
-                    <div key={post.id}>
-                        <h2>{post.title}</h2>
-                        <h4>{post.author.username}</h4>
-                        <p>{post.createdAt}</p>
-                    </div>
+            <Heading marginBottom={'36px'}>Recent posts</Heading>
+            <Stack spacing={'24px'}>
+                {data?.posts.map((post) => (
+                    <Box
+                        key={post.id}
+                        p={'24px'}
+                        shadow={'md'}
+                        borderWidth={'1px'}
+                        borderRadius={'4px'}
+                    >
+                        <Heading fontSize={'xl'}>{post.title}</Heading>
+                        <ChakraLink
+                            as={Link}
+                            href={`/user/${post.author.id}`}
+                            color={'gray.500'}
+                            fontSize={'sm'}
+                        >
+                            {post.author.username}
+                        </ChakraLink>
+                        <Text marginTop={'12px'}>{post.contentSnippet}</Text>
+                    </Box>
                 ))}
-            </Flex>
+                {data?.posts && (
+                    <Button
+                        margin={'0 auto'}
+                        size={'sm'}
+                        variant={'outline'}
+                        colorScheme={'gray'}
+                        isLoading={fetching}
+                        onClick={handleLoadMore}
+                    >
+                        Load more
+                    </Button>
+                )}
+            </Stack>
         </Page>
     );
 }
