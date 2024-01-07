@@ -5,8 +5,8 @@ import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 
 export type PostsQueryVariables = Types.Exact<{
-    limit: Types.Scalars['Int']['input'];
     cursor?: Types.InputMaybe<Types.Scalars['DateTimeISO']['input']>;
+    limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 export type PostsQuery = {
@@ -31,8 +31,8 @@ export type PostsQuery = {
 };
 
 export const PostsDocument = gql`
-    query Posts($limit: Int!, $cursor: DateTimeISO) {
-        posts(limit: $limit, cursor: $cursor) {
+    query Posts($cursor: DateTimeISO, $limit: Int) {
+        posts(cursor: $cursor, limit: $limit) {
             ...PostBasic
             author {
                 ...UserBasic
@@ -43,6 +43,6 @@ export const PostsDocument = gql`
     ${UserBasicFragmentDoc}
 `;
 
-export function usePostsQuery(options: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {
+export function usePostsQuery(options?: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {
     return useQuery<PostsQuery, PostsQueryVariables>({ query: PostsDocument, ...options });
 }

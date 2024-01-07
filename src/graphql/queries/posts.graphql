@@ -1,5 +1,5 @@
-query Posts($limit: Int!, $cursor: DateTimeISO) {
-    posts(limit: $limit, cursor: $cursor) {
+query Posts($cursor: DateTimeISO, $limit: Int) {
+    posts(cursor: $cursor, limit: $limit) {
         ...PostBasic
         author {
             ...UserBasic

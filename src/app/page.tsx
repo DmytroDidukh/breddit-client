@@ -15,6 +15,7 @@ function Home() {
                 {postsResult.data?.posts.map((post) => (
                     <div key={post.id}>
                         <h2>{post.title}</h2>
+                        <h4>{post.author.username}</h4>
                         <p>{post.createdAt}</p>
                     </div>
                 ))}
