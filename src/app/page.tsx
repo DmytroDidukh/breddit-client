@@ -2,19 +2,27 @@
 
 import { Box, Button, Link as ChakraLink, Heading, Stack, Text } from '@chakra-ui/react';
 import Link from 'next/link';
+import React from 'react';
 
 import { Page } from '@/components';
 import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
-    const [{ data, fetching }] = usePostsQuery({
+    const [cursor, setCursor] = React.useState(null);
+    const [{ data, fetching }, reExecuteQuery] = usePostsQuery({
         variables: {
             limit: 10,
+            cursor,
         },
     });
 
     const handleLoadMore = () => {
-        console.log('load more');
+        if (!data?.posts) return;
+
+        const lastPost = data.posts[data.posts.length - 1];
+        const newCursor = lastPost.createdAt;
+        setCursor(newCursor);
+        reExecuteQuery();
     };
 
     return (

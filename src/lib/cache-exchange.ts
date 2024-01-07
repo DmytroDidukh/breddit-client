@@ -5,10 +5,16 @@ import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
 import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
 import { PostsDocument, PostsQuery } from '@/graphql/queries';
 import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
+import { cursorPagination } from '@/lib/cursor-pagination';
 import { cacheQueryUpdater } from '@/utils';
 
 function createCacheExchange() {
     return cacheExchange({
+        resolvers: {
+            Query: {
+                posts: cursorPagination({ mergeMode: 'before' }),
+            },
+        },
         updates: {
             Mutation: {
                 signIn: (_result: SignInMutation, _, _cache) => {
