@@ -7,7 +7,11 @@ import { Page } from '@/components';
 import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
-    const [{ data, fetching }] = usePostsQuery();
+    const [{ data, fetching }] = usePostsQuery({
+        variables: {
+            limit: 10,
+        },
+    });
 
     const handleLoadMore = () => {
         console.log('load more');

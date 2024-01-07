@@ -120,13 +120,13 @@ export type QueryPostArgs = {
 
 export type QueryPostsArgs = {
     cursor?: InputMaybe<Scalars['DateTimeISO']['input']>;
-    limit?: InputMaybe<Scalars['Int']['input']>;
+    limit: Scalars['Int']['input'];
 };
 
 export type QueryPostsByAuthorArgs = {
     cursor?: InputMaybe<Scalars['DateTimeISO']['input']>;
     id: Scalars['Int']['input'];
-    limit?: InputMaybe<Scalars['Int']['input']>;
+    limit: Scalars['Int']['input'];
 };
 
 export type SignInInput = {

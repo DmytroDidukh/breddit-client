@@ -1,4 +1,4 @@
-query Posts($cursor: DateTimeISO, $limit: Int) {
+query Posts($cursor: DateTimeISO, $limit: Int!) {
     posts(cursor: $cursor, limit: $limit) {
         ...PostBasicSnippet
         author {
