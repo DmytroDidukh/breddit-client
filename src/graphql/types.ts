@@ -109,11 +109,21 @@ export type Query = {
     me?: Maybe<User>;
     post?: Maybe<Post>;
     posts: Array<Post>;
+    postsByAuthor: Array<Post>;
     users: Array<User>;
 };
 
 export type QueryPostArgs = {
     id: Scalars['Float']['input'];
+};
+
+export type QueryPostsArgs = {
+    cursor?: InputMaybe<Scalars['DateTimeISO']['input']>;
+    limit: Scalars['Int']['input'];
+};
+
+export type QueryPostsByAuthorArgs = {
+    id: Scalars['Int']['input'];
 };
 
 export type SignInInput = {

@@ -3,7 +3,11 @@ import { gql, useQuery, UseQueryArgs } from '@urql/next';
 import { PostBasicFragmentDoc } from '../fragments/post-basic.generated';
 import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
-export type PostsQueryVariables = Types.Exact<{ [key: string]: never }>;
+
+export type PostsQueryVariables = Types.Exact<{
+    limit: Types.Scalars['Int']['input'];
+    cursor?: Types.InputMaybe<Types.Scalars['DateTimeISO']['input']>;
+}>;
 
 export type PostsQuery = {
     __typename?: 'Query';
@@ -27,8 +31,8 @@ export type PostsQuery = {
 };
 
 export const PostsDocument = gql`
-    query Posts {
-        posts {
+    query Posts($limit: Int!, $cursor: DateTimeISO) {
+        posts(limit: $limit, cursor: $cursor) {
             ...PostBasic
             author {
                 ...UserBasic
@@ -39,6 +43,6 @@ export const PostsDocument = gql`
     ${UserBasicFragmentDoc}
 `;
 
-export function usePostsQuery(options?: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {
+export function usePostsQuery(options: Omit<UseQueryArgs<PostsQueryVariables>, 'query'>) {
     return useQuery<PostsQuery, PostsQueryVariables>({ query: PostsDocument, ...options });
 }
