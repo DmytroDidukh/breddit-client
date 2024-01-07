@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@urql/next';
 
-import { PostBasicFragmentDoc } from '../fragments/post-basic.generated';
+import { PostBasicSnippetFragmentDoc } from '../fragments/post-basic.generated';
 import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type CreatePostMutationVariables = Types.Exact<{
@@ -15,7 +15,7 @@ export type CreatePostMutation = {
             __typename?: 'Post';
             id: number;
             title: string;
-            content: string;
+            contentSnippet: string;
             points: number;
             createdAt: any;
             updatedAt: any;
@@ -36,7 +36,7 @@ export const CreatePostDocument = gql`
     mutation CreatePost($post: CreatePostInput!) {
         createPost(post: $post) {
             post {
-                ...PostBasic
+                ...PostBasicSnippet
                 author {
                     ...UserBasic
                 }
@@ -47,7 +47,7 @@ export const CreatePostDocument = gql`
             }
         }
     }
-    ${PostBasicFragmentDoc}
+    ${PostBasicSnippetFragmentDoc}
     ${UserBasicFragmentDoc}
 `;
 
