@@ -69,7 +69,7 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
 
             const data = cache.resolve(entityKey, fieldKey) as {
                 __typename: string;
-                posts: string[];
+                items: string[];
                 pageInfo: PageInfo;
             };
             if (!data) {
@@ -77,8 +77,8 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
             }
 
             pageInfo = cache.resolve(data, 'pageInfo') as PageInfo;
-            // Extract the "posts" array from the data
-            const links = cache.resolve(data, 'posts') as string[];
+            // Extract the "items" array from the data
+            const links = cache.resolve(data, 'items') as string[];
             const currentCursor = args[cursorArgument];
 
             if (links === null || links.length === 0) {
@@ -116,8 +116,8 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
         }
 
         return {
-            __typename: 'PaginatedPostsResult',
-            posts: result,
+            __typename: 'PostsResult',
+            items: result,
             pageInfo: {
                 __typename: 'PageInfo',
                 ...(pageInfo || null),

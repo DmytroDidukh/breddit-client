@@ -17,7 +17,7 @@ function Home() {
     });
 
     const handleLoadMore = () => {
-        const posts = data?.posts.posts;
+        const posts = data?.posts.items;
         if (!posts) return;
 
         setCursor(data.posts.pageInfo.endCursor || null);
@@ -30,7 +30,7 @@ function Home() {
         <Page>
             <Heading marginBottom={'36px'}>Recent posts</Heading>
             <Stack spacing={'24px'}>
-                {data?.posts.posts.map((post) => (
+                {data?.posts.items.map((post) => (
                     <Box
                         key={post.id}
                         p={'24px'}
@@ -52,7 +52,7 @@ function Home() {
                         <Text marginTop={'12px'}>{post.contentSnippet}</Text>
                     </Box>
                 ))}
-                {data?.posts && (
+                {data?.posts.pageInfo.hasNextPage && (
                     <Button
                         margin={'0 auto'}
                         size={'sm'}

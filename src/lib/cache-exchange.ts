@@ -15,7 +15,7 @@ import { cursorPagination } from './cursor-pagination';
 function createCacheExchange() {
     return cacheExchange({
         keys: {
-            PaginatedPostsResult: () => null,
+            PostsResult: () => null,
         },
         resolvers: {
             Query: {
