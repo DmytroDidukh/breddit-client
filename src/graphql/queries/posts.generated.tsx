@@ -12,8 +12,8 @@ export type PostsQueryVariables = Types.Exact<{
 export type PostsQuery = {
     __typename?: 'Query';
     posts: {
-        __typename?: 'PaginatedPostsResult';
-        posts: Array<{
+        __typename?: 'PostsResult';
+        items: Array<{
             __typename?: 'Post';
             id: number;
             title: string;
@@ -43,7 +43,7 @@ export type PostsQuery = {
 export const PostsDocument = gql`
     query Posts($limit: Int!, $cursor: DateTimeISO) {
         posts(limit: $limit, cursor: $cursor) {
-            posts {
+            items {
                 ...PostBasicSnippet
                 author {
                     ...UserBasic

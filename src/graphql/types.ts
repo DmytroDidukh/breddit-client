@@ -101,12 +101,6 @@ export type PageInfo = {
     startCursor?: Maybe<Scalars['String']['output']>;
 };
 
-export type PaginatedPostsResult = {
-    __typename?: 'PaginatedPostsResult';
-    pageInfo: PageInfo;
-    posts: Array<Post>;
-};
-
 export type Post = {
     __typename?: 'Post';
     author: User;
@@ -119,12 +113,18 @@ export type Post = {
     updatedAt: Scalars['DateTimeISO']['output'];
 };
 
+export type PostsResult = {
+    __typename?: 'PostsResult';
+    items: Array<Post>;
+    pageInfo: PageInfo;
+};
+
 export type Query = {
     __typename?: 'Query';
     me?: Maybe<User>;
     post?: Maybe<Post>;
-    posts: PaginatedPostsResult;
-    postsByAuthor: PaginatedPostsResult;
+    posts: PostsResult;
+    postsByAuthor: PostsResult;
     users: Array<User>;
 };
 
