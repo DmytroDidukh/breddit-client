@@ -93,6 +93,20 @@ export type MutationUpdatePostArgs = {
     post: UpdatePostInput;
 };
 
+export type PageInfo = {
+    __typename?: 'PageInfo';
+    endCursor?: Maybe<Scalars['String']['output']>;
+    hasNextPage: Scalars['Boolean']['output'];
+    hasPreviousPage: Scalars['Boolean']['output'];
+    startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+export type PaginatedPostsResult = {
+    __typename?: 'PaginatedPostsResult';
+    pageInfo: PageInfo;
+    posts: Array<Post>;
+};
+
 export type Post = {
     __typename?: 'Post';
     author: User;
@@ -109,8 +123,8 @@ export type Query = {
     __typename?: 'Query';
     me?: Maybe<User>;
     post?: Maybe<Post>;
-    posts: Array<Post>;
-    postsByAuthor: Array<Post>;
+    posts: PaginatedPostsResult;
+    postsByAuthor: PaginatedPostsResult;
     users: Array<User>;
 };
 
@@ -124,8 +138,8 @@ export type QueryPostsArgs = {
 };
 
 export type QueryPostsByAuthorArgs = {
+    authorId: Scalars['Int']['input'];
     cursor?: InputMaybe<Scalars['DateTimeISO']['input']>;
-    id: Scalars['Int']['input'];
     limit: Scalars['Int']['input'];
 };
 

@@ -1,8 +1,13 @@
-query Posts($cursor: DateTimeISO, $limit: Int!) {
-    posts(cursor: $cursor, limit: $limit) {
-        ...PostBasicSnippet
-        author {
-            ...UserBasic
+query Posts($limit: Int!, $cursor: DateTimeISO) {
+    posts(limit: $limit, cursor: $cursor) {
+        posts {
+            ...PostBasicSnippet
+            author {
+                ...UserBasic
+            }
+        }
+        pageInfo {
+            ...PageInfoBasic
         }
     }
 }
