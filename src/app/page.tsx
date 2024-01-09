@@ -8,7 +8,7 @@ import { Page } from '@/components';
 import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
-    const [cursor, setCursor] = React.useState(null);
+    const [cursor, setCursor] = React.useState<string | null>(null);
     const [{ data, fetching }, reExecuteQuery] = usePostsQuery({
         variables: {
             limit: 10,
@@ -17,19 +17,20 @@ function Home() {
     });
 
     const handleLoadMore = () => {
-        if (!data?.posts) return;
+        const posts = data?.posts.posts;
+        if (!posts) return;
 
-        const lastPost = data.posts[data.posts.length - 1];
-        const newCursor = lastPost.createdAt;
-        setCursor(newCursor);
+        setCursor(data.posts.pageInfo.endCursor || null);
         reExecuteQuery();
     };
+
+    console.log('DATA', data);
 
     return (
         <Page>
             <Heading marginBottom={'36px'}>Recent posts</Heading>
             <Stack spacing={'24px'}>
-                {data?.posts.map((post) => (
+                {data?.posts.posts.map((post) => (
                     <Box
                         key={post.id}
                         p={'24px'}
@@ -37,7 +38,9 @@ function Home() {
                         borderWidth={'1px'}
                         borderRadius={'4px'}
                     >
-                        <Heading fontSize={'xl'}>{post.title}</Heading>
+                        <Heading fontSize={'xl'}>
+                            {post.title} <b>{post.id}</b>
+                        </Heading>
                         <ChakraLink
                             as={Link}
                             href={`/user/${post.author.id}`}

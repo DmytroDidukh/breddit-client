@@ -1,6 +1,8 @@
 import { stringifyVariables } from '@urql/core';
 import { NullArray, Resolver, Variables } from '@urql/exchange-graphcache';
 
+import { PageInfo } from '@/graphql/types';
+
 interface PaginationParams {
     cursorArgument?: string;
     limitArgument?: string;
@@ -57,6 +59,7 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
         const visited = new Set();
         let result: NullArray<string> = [];
         let prevCursor: any = null;
+        let pageInfo: PageInfo | null = null;
 
         for (let i = 0; i < size; i++) {
             const { fieldKey, arguments: args } = fieldInfos[i];
@@ -64,7 +67,18 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
                 continue;
             }
 
-            const links = cache.resolve(entityKey, fieldKey) as string[];
+            const data = cache.resolve(entityKey, fieldKey) as {
+                __typename: string;
+                posts: string[];
+                pageInfo: PageInfo;
+            };
+            if (!data) {
+                continue;
+            }
+
+            pageInfo = cache.resolve(data, 'pageInfo') as PageInfo;
+            // Extract the "posts" array from the data
+            const links = cache.resolve(data, 'posts') as string[];
             const currentCursor = args[cursorArgument];
 
             if (links === null || links.length === 0) {
@@ -93,15 +107,27 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
         }
 
         const hasCurrentPage = cache.resolve(entityKey, fieldName, fieldArgs);
-        if (hasCurrentPage) {
-            return result;
-        } else if (!(info as any).store.schema) {
-            return undefined;
-        } else {
-            info.partial = true;
-            return result;
+        if (!hasCurrentPage) {
+            if (!(info as any).store.schema) {
+                return undefined;
+            } else {
+                info.partial = true;
+            }
         }
+
+        return {
+            __typename: 'PaginatedPostsResult',
+            posts: result,
+            pageInfo: {
+                __typename: 'PageInfo',
+                ...(pageInfo || null),
+            },
+        };
     };
 };
 
 export { cursorPagination };
+
+// https://youtu.be/I6ypD7qv3Z8?t=25278
+//
+//   https://github.com/urql-graphql/urql/blob/main/exchanges/graphcache/src/extras/relayPagination.ts

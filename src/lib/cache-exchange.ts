@@ -1,18 +1,25 @@
 import { cacheExchange } from '@urql/exchange-graphcache';
 
-import { ChangePasswordMutation, CreatePostMutation, SignUpMutation } from '@/graphql/mutations';
-import { SignInMutation } from '@/graphql/mutations/sign-in.generated';
-import { SignOutMutation } from '@/graphql/mutations/sign-out.generated';
-import { PostsDocument, PostsQuery } from '@/graphql/queries';
-import { MeDocument, MeQuery } from '@/graphql/queries/me.generated';
-import { cursorPagination } from '@/lib/cursor-pagination';
+import {
+    ChangePasswordMutation,
+    CreatePostMutation,
+    SignInMutation,
+    SignOutMutation,
+    SignUpMutation,
+} from '@/graphql/mutations';
+import { MeDocument, MeQuery } from '@/graphql/queries';
 import { cacheQueryUpdater } from '@/utils';
+
+import { cursorPagination } from './cursor-pagination';
 
 function createCacheExchange() {
     return cacheExchange({
+        keys: {
+            PaginatedPostsResult: () => null,
+        },
         resolvers: {
             Query: {
-                posts: cursorPagination({ mergeMode: 'before' }),
+                posts: cursorPagination({ mergeMode: 'after' }),
             },
         },
         updates: {
@@ -74,26 +81,11 @@ function createCacheExchange() {
                     );
                 },
                 createPost: (_result: CreatePostMutation, _, _cache) => {
-                    cacheQueryUpdater<CreatePostMutation, PostsQuery>(
-                        _cache,
-                        { query: PostsDocument },
-                        _result,
-                        (result, query) => {
-                            if (result.createPost.errors) {
-                                return query;
-                            } else {
-                                const newPost = result.createPost.post;
-                                if (newPost) {
-                                    return {
-                                        __typename: 'Query',
-                                        posts: [newPost, ...query.posts],
-                                    };
-                                }
-
-                                return query;
-                            }
-                        },
-                    );
+                    const allFields = _cache.inspectFields('Query');
+                    const fieldInfos = allFields.filter((info) => info.fieldName === 'posts');
+                    fieldInfos.forEach((fi) => {
+                        _cache.invalidate('Query', 'posts', fi.arguments || {});
+                    });
                 },
             },
         },
