@@ -9,22 +9,17 @@ import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
     const [cursor, setCursor] = React.useState<string | null>(null);
-    const [{ data, fetching }, reExecuteQuery] = usePostsQuery({
+    const [{ data, fetching }, executeQuery] = usePostsQuery({
         variables: {
-            limit: 10,
+            limit: 1,
             cursor,
         },
     });
 
     const handleLoadMore = () => {
-        const posts = data?.posts.items;
-        if (!posts) return;
-
-        setCursor(data.posts.pageInfo.endCursor || null);
-        reExecuteQuery();
+        setCursor(data?.posts.pageInfo.endCursor || null);
+        executeQuery();
     };
-
-    console.log('DATA', data);
 
     return (
         <Page>

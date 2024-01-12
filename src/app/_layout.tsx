@@ -2,7 +2,7 @@
 
 import { RequestCookie } from '@edge-runtime/cookies';
 import { UrqlProvider } from '@urql/next';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { createUrqlClient } from '@/lib';
 
@@ -16,12 +16,10 @@ function Layout({ children, cookies }: { children: React.ReactNode; cookies: Req
     return (
         <UrqlProvider client={client} ssr={ssr}>
             <ThemeProvider>
-                <Suspense>
-                    <AuthProvider>
-                        <Header />
-                        {children}
-                    </AuthProvider>
-                </Suspense>
+                <AuthProvider>
+                    <Header />
+                    {children}
+                </AuthProvider>
             </ThemeProvider>
         </UrqlProvider>
     );
