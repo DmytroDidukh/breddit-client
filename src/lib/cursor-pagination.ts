@@ -12,7 +12,7 @@ interface PaginationParams {
 function compareArgs(
     fieldArgs: Variables,
     connectionArgs: Variables,
-    { cursorArgument, limitArgument = 'limit' }: PaginationParams,
+    { cursorArgument = 'cursor', limitArgument = 'limit' }: PaginationParams,
 ): boolean {
     for (const key in connectionArgs) {
         if (key === cursorArgument || key === limitArgument) {
@@ -43,7 +43,10 @@ function compareArgs(
     return true;
 }
 
-const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any, any, any> => {
+const cursorPagination = (
+    paginationParams: PaginationParams,
+    resultTypename: string,
+): Resolver<any, any, any> => {
     const { cursorArgument = 'cursor', mergeMode = 'after' } = paginationParams;
 
     return (_parent, fieldArgs, cache, info) => {
@@ -116,7 +119,7 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
         }
 
         return {
-            __typename: 'PostsResult',
+            __typename: resultTypename,
             items: result,
             pageInfo: {
                 __typename: 'PageInfo',
@@ -127,7 +130,3 @@ const cursorPagination = (paginationParams: PaginationParams = {}): Resolver<any
 };
 
 export { cursorPagination };
-
-// https://youtu.be/I6ypD7qv3Z8?t=25278
-//
-//   https://github.com/urql-graphql/urql/blob/main/exchanges/graphcache/src/extras/relayPagination.ts

@@ -19,7 +19,7 @@ function createCacheExchange() {
         },
         resolvers: {
             Query: {
-                posts: cursorPagination({ mergeMode: 'after' }),
+                posts: cursorPagination({ mergeMode: 'after' }, 'PostsResult'),
             },
         },
         updates: {
