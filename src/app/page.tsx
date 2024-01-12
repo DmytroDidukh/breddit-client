@@ -11,7 +11,7 @@ function Home() {
     const [cursor, setCursor] = React.useState<string | null>(null);
     const [{ data, fetching }, executeQuery] = usePostsQuery({
         variables: {
-            limit: 1,
+            limit: 10,
             cursor,
         },
     });
@@ -24,7 +24,7 @@ function Home() {
     return (
         <Page>
             <Heading marginBottom={'36px'}>Recent posts</Heading>
-            <Stack spacing={'24px'}>
+            <Stack spacing={'24px'} paddingBottom={'100px'}>
                 {data?.posts.items.map((post) => (
                     <Box
                         key={post.id}

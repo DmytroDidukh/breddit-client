@@ -14,7 +14,7 @@ const Page: React.FC<PageProps> = ({ variant = 'regular', children }) => {
                 p={'50px'}
                 margin={'auto'}
                 width={'100%'}
-                minHeight={'calc(100% - 60px)'}
+                minHeight={'calc(100vh - 60px)'}
                 maxW={variant === 'regular' ? '1200px' : '400px'}
                 display={'flex'}
                 flexDirection={'column'}
