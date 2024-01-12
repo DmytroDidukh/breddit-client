@@ -16,10 +16,14 @@ function Layout({ children, cookies }: { children: React.ReactNode; cookies: Req
     return (
         <UrqlProvider client={client} ssr={ssr}>
             <ThemeProvider>
+                {/* TODO: Suspense breaks fetching posts and re-render page but with it  */}
+                {/* not-found page and such is not working */}
+                {/* <Suspense> */}
                 <AuthProvider>
                     <Header />
                     {children}
                 </AuthProvider>
+                {/* </Suspense> */}
             </ThemeProvider>
         </UrqlProvider>
     );

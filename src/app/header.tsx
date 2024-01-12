@@ -44,6 +44,7 @@ function Header() {
             position={'sticky'}
             top={0}
             as={'header'}
+            zIndex={1}
         >
             <Link href={Routes.HOME}>
                 {/* TODO: Fix color mode colors for text */}

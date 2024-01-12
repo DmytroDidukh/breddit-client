@@ -1,6 +1,15 @@
 'use client';
 
-import { Box, Button, Link as ChakraLink, Heading, Stack, Text } from '@chakra-ui/react';
+import {
+    Avatar,
+    Box,
+    Button,
+    Link as ChakraLink,
+    Flex,
+    Heading,
+    Stack,
+    Text,
+} from '@chakra-ui/react';
 import Link from 'next/link';
 import React from 'react';
 
@@ -42,7 +51,10 @@ function Home() {
                             color={'gray.500'}
                             fontSize={'sm'}
                         >
-                            {post.author.username}
+                            <Flex alignItems={'center'} gap={'4px'}>
+                                <Avatar name={post.author.username} size="2xs" />
+                                {post.author.username}
+                            </Flex>
                         </ChakraLink>
                         <Text marginTop={'12px'}>{post.contentSnippet}</Text>
                     </Box>

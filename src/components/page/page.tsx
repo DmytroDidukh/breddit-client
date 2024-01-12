@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 interface PageProps {
     variant?: 'small' | 'regular';
@@ -8,23 +8,21 @@ interface PageProps {
 
 const Page: React.FC<PageProps> = ({ variant = 'regular', children }) => {
     return (
-        <Suspense fallback={<div>Loading...</div>}>
-            <Box
-                as={'main'}
-                p={'50px'}
-                margin={'auto'}
-                width={'100%'}
-                minHeight={'calc(100vh - 60px)'}
-                maxW={variant === 'regular' ? '1200px' : '400px'}
-                display={'flex'}
-                flexDirection={'column'}
-                borderLeftWidth="1px"
-                borderRightWidth="1px"
-                borderColor="gray.700"
-            >
-                {children}
-            </Box>
-        </Suspense>
+        <Box
+            as={'main'}
+            p={'50px'}
+            margin={'auto'}
+            width={'100%'}
+            minHeight={'calc(100vh - 60px)'}
+            maxW={variant === 'regular' ? '1200px' : '400px'}
+            display={'flex'}
+            flexDirection={'column'}
+            borderLeftWidth="1px"
+            borderRightWidth="1px"
+            borderColor="gray.700"
+        >
+            {children}
+        </Box>
     );
 };
 
