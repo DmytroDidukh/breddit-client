@@ -2,7 +2,7 @@
 
 // import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import { PlusSquareIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, Flex, Heading } from '@chakra-ui/react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
@@ -74,7 +74,9 @@ function Header() {
                             )}
 
                             <Flex alignItems={'center'} gap={'12px'}>
-                                <Text as={'b'}>{user.username}</Text>
+                                <Link href={`/user/${user.id}`}>
+                                    <Avatar name={user.username} size="sm" />
+                                </Link>
                                 <Button
                                     size={'sm'}
                                     width={'80px'}
