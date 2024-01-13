@@ -5,6 +5,7 @@ export enum Routes {
     FORGOT_PASSWORD = '/forgot-password',
     CHANGE_PASSWORD = '/change-password/[token]',
     CREATE_POST = '/create-post',
+    USER_DETAILS = '/user/[id]',
 }
 
 export const PublicRoutes = [
