@@ -2,6 +2,7 @@
 
 import {
     Avatar,
+    Box,
     Button,
     Flex,
     Heading,
@@ -19,6 +20,7 @@ import { InfoAlert, Page, PostItem } from '@/components';
 import { usePostsByAuthorQuery } from '@/graphql/queries/posts-by-author.generated';
 import { useUserQuery } from '@/graphql/queries/user.generated';
 import { Post } from '@/graphql/types';
+import { DateUtils } from '@/utils';
 
 enum TABS {
     ABOUT,
@@ -75,7 +77,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ params }) => {
                             Joined:
                         </Text>
                         <Text display={'inline'} color={'gray.100'} fontSize="xs">
-                            {new Date(userData.user.createdAt).toDateString()}
+                            {DateUtils.formatToLongDate(userData.user.createdAt)}
                         </Text>
                     </Flex>
                 </Flex>
@@ -93,31 +95,41 @@ const UserDetails: React.FC<UserDetailsProps> = ({ params }) => {
 
                 <TabPanels>
                     <TabPanel>
-                        <Text>About me:</Text>
+                        <Text>About me: NOT IMPLEMENTED</Text>
                     </TabPanel>
                     <TabPanel>
-                        <Stack spacing={'24px'} paddingBottom={'100px'}>
-                            {postsData?.postsByAuthor.items.map((p) => {
-                                const post = {
-                                    ...p,
-                                    author: userData.user,
-                                } as Post;
+                        {!!postsData?.postsByAuthor.items.length && (
+                            <Stack spacing={'24px'} paddingBottom={'100px'}>
+                                {postsData.postsByAuthor.items.map((p) => {
+                                    const post = {
+                                        ...p,
+                                        author: userData.user,
+                                    } as Post;
 
-                                return <PostItem key={p.id} post={post} includeAuthor={false} />;
-                            })}
-                            {postsData?.postsByAuthor.pageInfo.hasNextPage && (
-                                <Button
-                                    margin={'0 auto'}
-                                    size={'sm'}
-                                    variant={'outline'}
-                                    colorScheme={'gray'}
-                                    isLoading={fetching}
-                                    onClick={handleLoadMore}
-                                >
-                                    Load more
-                                </Button>
-                            )}
-                        </Stack>
+                                    return (
+                                        <PostItem key={p.id} post={post} includeAuthor={false} />
+                                    );
+                                })}
+                                {postsData?.postsByAuthor.pageInfo.hasNextPage && (
+                                    <Button
+                                        margin={'0 auto'}
+                                        size={'sm'}
+                                        variant={'outline'}
+                                        colorScheme={'gray'}
+                                        isLoading={fetching}
+                                        onClick={handleLoadMore}
+                                    >
+                                        Load more
+                                    </Button>
+                                )}
+                            </Stack>
+                        )}
+
+                        {postsData?.postsByAuthor.items.length === 0 && (
+                            <Box width={'300px'} margin={'100px auto'}>
+                                <InfoAlert message={'No posts yet'} show />
+                            </Box>
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

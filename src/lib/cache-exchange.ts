@@ -20,6 +20,7 @@ function createCacheExchange() {
         resolvers: {
             Query: {
                 posts: cursorPagination({ mergeMode: 'after' }, 'PostsResult'),
+                postsByAuthor: cursorPagination({ mergeMode: 'after' }, 'PostsResult'),
             },
         },
         updates: {
