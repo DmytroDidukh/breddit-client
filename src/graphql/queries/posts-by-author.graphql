@@ -1,0 +1,10 @@
+query PostsByAuthor($limit: Int!, $authorId: Int!, $cursor: DateTimeISO) {
+    postsByAuthor(limit: $limit, authorId: $authorId, cursor: $cursor) {
+        items {
+            ...PostBasicSnippet
+        }
+        pageInfo {
+            ...PageInfoBasic
+        }
+    }
+}

@@ -125,6 +125,7 @@ export type Query = {
     post?: Maybe<Post>;
     posts: PostsResult;
     postsByAuthor: PostsResult;
+    user?: Maybe<User>;
     users: Array<User>;
 };
 
@@ -141,6 +142,10 @@ export type QueryPostsByAuthorArgs = {
     authorId: Scalars['Int']['input'];
     cursor?: InputMaybe<Scalars['DateTimeISO']['input']>;
     limit: Scalars['Int']['input'];
+};
+
+export type QueryUserArgs = {
+    id: Scalars['Int']['input'];
 };
 
 export type SignInInput = {
