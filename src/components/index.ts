@@ -4,5 +4,6 @@ import FormField from './form-field/form-field';
 import FormTextarea from './form-textarea/form-textarea';
 import InfoAlert from './info-alert/info-alert';
 import Page from './page/page';
+import PostItem from './post-item/post-item';
 
-export { Page, FormField, FormTextarea, ErrorAlert, InfoAlert, Form };
+export { Page, FormField, FormTextarea, ErrorAlert, InfoAlert, Form, PostItem };
