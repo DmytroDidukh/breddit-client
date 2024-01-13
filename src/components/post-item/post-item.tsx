@@ -15,15 +15,14 @@ const PostItem: React.FC<PostItemProps> = ({ post, includeAuthor = true }) => {
     return (
         <Box key={post.id} p={'24px'} shadow={'md'} borderWidth={'1px'} borderRadius={'4px'}>
             <Flex alignItems={'center'} gap={'2px'}>
-                <Heading fontSize={'2xl'} marginRight={'8px'}>
-                    {post.title}
-                </Heading>
+                <Heading fontSize={'2xl'}>{post.title}</Heading>
                 {includeAuthor && post.author && (
                     <ChakraLink
                         as={Link}
                         href={`/user/${post.author.id}`}
                         color={'gray.500'}
                         fontSize={'sm'}
+                        marginLeft={'8px'}
                     >
                         <Flex alignItems={'center'} gap={'4px'}>
                             <Avatar name={post.author.username} size="2xs" />
@@ -33,7 +32,7 @@ const PostItem: React.FC<PostItemProps> = ({ post, includeAuthor = true }) => {
                 )}
                 <Separator />
                 <Text fontSize={'xs'} color={'gray.500'}>
-                    {DateUtils.formatToShortDate(post.createdAt)}{' '}
+                    {DateUtils.formatToRelativeTime(post.createdAt)}{' '}
                 </Text>
             </Flex>
 
