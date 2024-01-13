@@ -5,5 +5,6 @@ import FormTextarea from './form-textarea/form-textarea';
 import InfoAlert from './info-alert/info-alert';
 import Page from './page/page';
 import PostItem from './post-item/post-item';
+import Separator from './separator/separator';
 
-export { Page, FormField, FormTextarea, ErrorAlert, InfoAlert, Form, PostItem };
+export { Page, FormField, FormTextarea, ErrorAlert, InfoAlert, Form, PostItem, Separator };
