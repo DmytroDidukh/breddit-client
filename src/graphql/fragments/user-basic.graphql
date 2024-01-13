@@ -5,3 +5,10 @@ fragment UserBasic on User {
     createdAt
     updatedAt
 }
+
+fragment UserBasicPrivate on User {
+    id
+    username
+    createdAt
+    updatedAt
+}

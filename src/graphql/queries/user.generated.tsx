@@ -1,6 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
-import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
+import { UserBasicPrivateFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 
 export type UserQueryVariables = Types.Exact<{
@@ -13,7 +13,6 @@ export type UserQuery = {
         __typename?: 'User';
         id: number;
         username: string;
-        email: string;
         createdAt: any;
         updatedAt: any;
     } | null;
@@ -22,10 +21,10 @@ export type UserQuery = {
 export const UserDocument = gql`
     query User($userId: Int!) {
         user(id: $userId) {
-            ...UserBasic
+            ...UserBasicPrivate
         }
     }
-    ${UserBasicFragmentDoc}
+    ${UserBasicPrivateFragmentDoc}
 `;
 
 export function useUserQuery(options: Omit<UseQueryArgs<UserQueryVariables>, 'query'>) {

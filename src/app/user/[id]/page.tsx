@@ -20,6 +20,7 @@ import { InfoAlert, Page, PostItem } from '@/components';
 import { usePostsByAuthorQuery } from '@/graphql/queries/posts-by-author.generated';
 import { useUserQuery } from '@/graphql/queries/user.generated';
 import { Post } from '@/graphql/types';
+import { useAuth } from '@/hooks';
 import { DateUtils } from '@/utils';
 
 enum TABS {
@@ -49,6 +50,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ params }) => {
         },
         pause: tabIndex !== TABS.USER_POSTS,
     });
+    const { user: me } = useAuth();
 
     if (!userData?.user) {
         return <InfoAlert message={'User not found'} show />;
@@ -69,9 +71,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({ params }) => {
                 <Avatar size={'lg'} name={userData.user.username} />
                 <Flex flexDirection={'column'} gap={0}>
                     <Heading margin={0}>{userData.user.username}</Heading>
-                    <Text fontSize="md" color={'gray.500'}>
-                        {userData.user.email}
-                    </Text>
+                    {me?.id === userData.user.id && (
+                        <Text fontSize="md" color={'gray.500'}>
+                            {me.email}
+                        </Text>
+                    )}
                     <Flex flexDirection={'row'} gap={'2px'}>
                         <Text color={'gray.500'} fontSize="xs">
                             Joined:
