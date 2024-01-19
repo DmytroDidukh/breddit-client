@@ -22,7 +22,7 @@ interface PostItemProps {
     post: Omit<Post, 'content' | 'author'> & { author: UserBasicPublicFragment };
     includeVoting: boolean;
     includeAuthor: boolean;
-    onVote?: (value: number, postId: number) => void;
+    onVote?: (postId: number, value: number) => void;
 }
 
 const PostItem: React.FC<PostItemProps> = ({
@@ -42,7 +42,7 @@ const PostItem: React.FC<PostItemProps> = ({
                             size={'sm'}
                             icon={<ChevronUpIcon width={'20px'} height={'20px'} />}
                             backgroundColor={'transparent'}
-                            onClick={() => onVote?.(1, post.id)}
+                            onClick={() => onVote?.(post.id, 1)}
                         />
                         <Text fontSize={'xl'}>{post.points}</Text>
                         <IconButton
@@ -51,7 +51,7 @@ const PostItem: React.FC<PostItemProps> = ({
                             size={'sm'}
                             icon={<ChevronDownIcon width={'25px'} height={'25px'} />}
                             backgroundColor={'transparent'}
-                            onClick={() => onVote?.(1, post.id)}
+                            onClick={() => onVote?.(post.id, -1)}
                         />
                     </Flex>
                 )}

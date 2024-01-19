@@ -20,7 +20,7 @@ function Home() {
         executeQuery();
     };
 
-    const handleVote = (value: number, postId: number) => {
+    const handleVote = (postId: number, value: number) => {
         console.log({ value, postId });
     };
 

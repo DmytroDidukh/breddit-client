@@ -58,6 +58,7 @@ export type Mutation = {
     signOut: Scalars['Boolean']['output'];
     signUp: SignUpResult;
     updatePost: UpdatePostResult;
+    vote: Scalars['Boolean']['output'];
 };
 
 export type MutationChangePasswordArgs = {
@@ -91,6 +92,11 @@ export type MutationSignUpArgs = {
 export type MutationUpdatePostArgs = {
     id: Scalars['Int']['input'];
     post: UpdatePostInput;
+};
+
+export type MutationVoteArgs = {
+    postId: Scalars['Int']['input'];
+    value: Scalars['Int']['input'];
 };
 
 export type PageInfo = {
