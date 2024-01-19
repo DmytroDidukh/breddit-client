@@ -4,6 +4,7 @@ import { Button, Heading, Stack } from '@chakra-ui/react';
 import React from 'react';
 
 import { Page, PostItem } from '@/components';
+import { useVoteMutation } from '@/graphql/mutations';
 import { usePostsQuery } from '@/graphql/queries';
 
 function Home() {
@@ -14,14 +15,18 @@ function Home() {
             cursor,
         },
     });
+    const [, executeVote] = useVoteMutation();
 
     const handleLoadMore = () => {
         setCursor(data?.posts.pageInfo.endCursor || null);
         executeQuery();
     };
 
-    const handleVote = (postId: number, value: number) => {
-        console.log({ value, postId });
+    const handleVote = async (postId: number, value: number) => {
+        await executeVote({
+            postId,
+            value,
+        });
     };
 
     return (
