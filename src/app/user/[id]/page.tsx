@@ -111,7 +111,12 @@ const UserDetails: React.FC<UserDetailsProps> = ({ params }) => {
                                     } as Post;
 
                                     return (
-                                        <PostItem key={p.id} post={post} includeAuthor={false} />
+                                        <PostItem
+                                            key={p.id}
+                                            post={post}
+                                            includeAuthor={false}
+                                            includeVoting={false}
+                                        />
                                     );
                                 })}
                                 {postsData?.postsByAuthor.pageInfo.hasNextPage && (

@@ -20,11 +20,23 @@ function Home() {
         executeQuery();
     };
 
+    const handleVote = (value: number, postId: number) => {
+        console.log({ value, postId });
+    };
+
     return (
         <Page>
             <Heading marginBottom={'36px'}>Recent posts</Heading>
             <Stack spacing={'24px'} paddingBottom={'100px'}>
-                {data?.posts.items.map((post) => <PostItem key={post.id} post={post} />)}
+                {data?.posts.items.map((post) => (
+                    <PostItem
+                        key={post.id}
+                        post={post}
+                        includeVoting
+                        includeAuthor
+                        onVote={handleVote}
+                    />
+                ))}
                 {data?.posts.pageInfo.hasNextPage && (
                     <Button
                         margin={'0 auto'}
