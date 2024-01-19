@@ -1,7 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
-import { PageInfoBasicFragmentDoc } from '../fragments/page-info-basic.generated';
-import { PostBasicSnippetFragmentDoc } from '../fragments/post-basic.generated';
+import { PageInfoBasicFragmentDoc, PostBasicSnippetFragmentDoc } from '../fragments';
 import * as Types from '../types';
 
 export type PostsByAuthorQueryVariables = Types.Exact<{

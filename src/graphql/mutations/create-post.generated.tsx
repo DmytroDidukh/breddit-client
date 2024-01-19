@@ -1,7 +1,6 @@
 import { gql, useMutation } from '@urql/next';
 
-import { PostBasicSnippetFragmentDoc } from '../fragments/post-basic.generated';
-import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
+import { PostBasicSnippetFragmentDoc, UserBasicFragmentDoc } from '../fragments';
 import * as Types from '../types';
 export type CreatePostMutationVariables = Types.Exact<{
     post: Types.CreatePostInput;

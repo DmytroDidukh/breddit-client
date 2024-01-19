@@ -1,6 +1,6 @@
 import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
-import { UserBasicPublicFragmentDoc } from '../fragments/user-basic.generated';
+import { UserBasicPublicFragmentDoc } from '../fragments';
 import * as Types from '../types';
 
 export type UserQueryVariables = Types.Exact<{

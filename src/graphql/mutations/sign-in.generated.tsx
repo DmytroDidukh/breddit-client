@@ -1,6 +1,6 @@
 import { gql, useMutation } from '@urql/next';
 
-import { UserBasicFragmentDoc } from '../fragments/user-basic.generated';
+import { UserBasicFragmentDoc } from '../fragments';
 import * as Types from '../types';
 export type SignInMutationVariables = Types.Exact<{
     user: Types.SignInInput;
