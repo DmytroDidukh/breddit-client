@@ -3,7 +3,7 @@ query Posts($limit: Int!, $cursor: DateTimeISO) {
         items {
             ...PostBasicSnippet
             author {
-                ...UserBasicPrivate
+                ...UserBasicPublic
             }
         }
         pageInfo {

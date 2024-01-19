@@ -6,7 +6,7 @@ fragment UserBasic on User {
     updatedAt
 }
 
-fragment UserBasicPrivate on User {
+fragment UserBasicPublic on User {
     id
     username
     createdAt

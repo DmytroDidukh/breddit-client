@@ -9,7 +9,7 @@ export type UserBasicFragment = {
     updatedAt: any;
 };
 
-export type UserBasicPrivateFragment = {
+export type UserBasicPublicFragment = {
     __typename?: 'User';
     id: number;
     username: string;
@@ -26,8 +26,8 @@ export const UserBasicFragmentDoc = gql`
         updatedAt
     }
 `;
-export const UserBasicPrivateFragmentDoc = gql`
-    fragment UserBasicPrivate on User {
+export const UserBasicPublicFragmentDoc = gql`
+    fragment UserBasicPublic on User {
         id
         username
         createdAt

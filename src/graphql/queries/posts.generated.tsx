@@ -2,7 +2,7 @@ import { gql, useQuery, UseQueryArgs } from '@urql/next';
 
 import { PageInfoBasicFragmentDoc } from '../fragments/page-info-basic.generated';
 import { PostBasicSnippetFragmentDoc } from '../fragments/post-basic.generated';
-import { UserBasicPrivateFragmentDoc } from '../fragments/user-basic.generated';
+import { UserBasicPublicFragmentDoc } from '../fragments/user-basic.generated';
 import * as Types from '../types';
 export type PostsQueryVariables = Types.Exact<{
     limit: Types.Scalars['Int']['input'];
@@ -45,7 +45,7 @@ export const PostsDocument = gql`
             items {
                 ...PostBasicSnippet
                 author {
-                    ...UserBasicPrivate
+                    ...UserBasicPublic
                 }
             }
             pageInfo {
@@ -54,7 +54,7 @@ export const PostsDocument = gql`
         }
     }
     ${PostBasicSnippetFragmentDoc}
-    ${UserBasicPrivateFragmentDoc}
+    ${UserBasicPublicFragmentDoc}
     ${PageInfoBasicFragmentDoc}
 `;
 
